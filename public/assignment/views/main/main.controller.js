@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("FormBuilderApp")
+        .module("FormBuilderApp", ["ngRoute"])
         .controller("MainController", MainController);
 
     function MainController($scope, $location) {

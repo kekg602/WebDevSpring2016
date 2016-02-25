@@ -1,15 +1,12 @@
 (function(){
     angular
-        .module("FormBuilderApp")
+        .module("FormBuilderApp", ["ngRoute"])
         .config("Configure");
 
     function Configure($routeProvider){
         $routeProvider
-            .when("/home", {
-                templateUrl: "views/home/home.view.html"
-            })
             .otherwise({
-                redirectTo: "/home"
+                redirectTo: "/home/home.view.html"
             });
     }
 })();
