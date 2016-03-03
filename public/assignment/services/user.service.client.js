@@ -48,7 +48,7 @@
         // calls back with new user
         function createUser (user, callback) {
             var user = {
-                _id: (newDate).getTime(),
+                _id: (new Date).getTime(),
                 firstname: user.firstName,
                 lastname: user.lastName,
                 username: user.username,
@@ -86,4 +86,4 @@
         }
 
     }
-})
+})();
