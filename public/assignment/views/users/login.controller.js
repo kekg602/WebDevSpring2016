@@ -11,7 +11,7 @@
 
             UserService.findUserByCredentials(user.username, user.password, function(foundUser){
                 if (foundUser){
-                    $rootScope.currentUser = foundUser;
+                    $rootScope.user = foundUser;
                     $location.url("/profile");
                 } else {
                     $scope.message = "User not found";
