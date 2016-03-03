@@ -1,4 +1,6 @@
 (function() {
+    'use strict';
+
     angular
         .module("FormBuilderApp")
         .controller("LoginController", LoginController);
@@ -11,7 +13,7 @@
 
             UserService.findUserByCredentials(user.username, user.password, function(foundUser){
                 if (foundUser){
-                    $rootScope.user = foundUser;
+                    $rootScope.currentUser = foundUser;
                     $location.url("/profile");
                 } else {
                     $scope.message = "User not found";

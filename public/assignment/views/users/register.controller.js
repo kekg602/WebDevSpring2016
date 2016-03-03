@@ -40,7 +40,7 @@
                 }
 
                 UserService.createUser($scope.user, function(newUser){
-                    $rootScope.user = newUser;
+                    $rootScope.currentUser = newUser;
                     $location.url("/profile");
                 });
             });

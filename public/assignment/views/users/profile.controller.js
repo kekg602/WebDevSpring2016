@@ -6,7 +6,7 @@
         .controller("ProfileController", ProfileController);
 
     function ProfileController($scope, $rootScope, UserService){
-        $scope.currentUser =  $rootScope.user;
+        $scope.currentUser =  $rootScope.currentUser;
         $scope.updateUser = updateUser;
 
         function updateUser(user){
@@ -38,14 +38,14 @@
                 return;
             }
 
-            var userId = $rootScope.user._id;
+            var userId = $scope.currentUser._id;
             UserService.updateUser(userId, user, function(updatedUser){
                 $scope.currentUser = updatedUser;
             });
 
             if (user){
                 $scope.message = "User updated successfully";
-                $rootScope.user = $scope.currentUser;
+                $rootScope.currentUser = $scope.currentUser;
             } else {
                 $scope.error = "Unable to update the user";
             }
