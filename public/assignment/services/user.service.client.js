@@ -81,9 +81,10 @@
                     model.users[u].username = user.username;
                     model.users[u].password = user.password;
                     model.users[u].roles = user.roles;
+                    callback(model.users[u]);
                 }
             }
-            callback(user);
+            callback(null);
         }
 
     }

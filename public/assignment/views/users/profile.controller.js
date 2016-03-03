@@ -40,15 +40,14 @@
 
             var userId = $scope.currentUser._id;
             UserService.updateUser(userId, user, function(updatedUser){
-                $scope.currentUser = updatedUser;
+                if (updatedUser){
+                    $scope.message = "User updated successfully";
+                    $scope.currentUser = updatedUser;
+                    $rootScope.currentUser = updatedUser;
+                } else {
+                    $scope.error = "Unable to update the user";
+                }
             });
-
-            if (user){
-                $scope.message = "User updated successfully";
-                $rootScope.currentUser = $scope.currentUser;
-            } else {
-                $scope.error = "Unable to update the user";
-            }
         }
     }
 
