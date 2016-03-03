@@ -30,8 +30,8 @@
         }
 
         function findAllFormsForUser(userId, callback){
+            var userForms = [];
             for (var u in model.forms){
-                var userForms = [];
                 if (model.forms[u].userId === userId){
                     userForms.push(model.forms[u]);
                 }
