@@ -22,6 +22,7 @@
         function createFormForUser(userId, form, callback){
             var form = {
                 _id: (new Date).getTime(),
+                title: form.title,
                 userId: userId
             };
             model.forms.push(form);
