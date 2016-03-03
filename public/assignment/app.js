@@ -1,4 +1,6 @@
 (function(){
-    angular
-        .module("FormBuilderApp", ["ngRoute"]);
+    'use strict';
+
+         angular
+             .module("FormBuilderApp", ["ngRoute"]);
 })();

@@ -1,6 +1,8 @@
 (function() {
+    'use strict';
+
     angular
-        .module("FormBuilderApp", ["ngRoute"])
+        .module("FormBuilderApp")
         .factory("UserService", UserService);
 
     function UserService($rootScope){
@@ -84,4 +86,4 @@
         }
 
     }
-}
+})

@@ -1,6 +1,8 @@
 (function(){
+    'use strict';
+
     angular
-        .module("FormBuilderApp", ["ngRoute"])
+        .module("FormBuilderApp")
         .controller("SidebarController", SidebarController)
 
     function SidebarController($scope, $location, UserService){

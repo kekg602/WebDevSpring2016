@@ -1,9 +1,12 @@
 (function(){
+    'use strict';
+
     angular
-        .module("FormBuilderApp", ["ngRoute"])
+        .module("FormBuilderApp")
         .controller("MainController", MainController);
 
     function MainController($scope, $location) {
         $scope.$location = $location;
     }
+
 })();
