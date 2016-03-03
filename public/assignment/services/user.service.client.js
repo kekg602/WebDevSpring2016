@@ -53,7 +53,8 @@
                 lastname: user.lastName,
                 username: user.username,
                 password: user.password,
-                roles: user.roles
+                roles: user.roles,
+                email: user.email
             };
             model.users.push(user);
             callback(user);
