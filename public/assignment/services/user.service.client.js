@@ -30,13 +30,14 @@
         // accepts params username, password and callback
         // returns callback with user if found
         function findUserByCredentials(username, password, callback) {
+            var user = null;
             for (var u in model.users) {
                 if (model.users[u].username === username &&
                     model.users[u].password === password) {
-                    callback(model.users[u]);
+                    user = model.users[u];
                 }
             }
-            callback(null);
+            callback(user);
         }
 
         // accepts callback, calls back with all users
@@ -74,6 +75,7 @@
         // takes in user id, user object and callback
         // updates that particular user and calls back with updated user
         function updateUser (userId, user, callback) {
+            var user = null;
             for (var u in model.users) {
                 if (model.users[u].userId === userId) {
                     model.users[u].firstname = user.firstName;
@@ -81,10 +83,10 @@
                     model.users[u].username = user.username;
                     model.users[u].password = user.password;
                     model.users[u].roles = user.roles;
-                    callback(model.users[u]);
+                    user = model.users[u];
                 }
             }
-            callback(null);
+            callback(user);
         }
 
     }

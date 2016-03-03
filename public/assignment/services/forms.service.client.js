@@ -54,6 +54,7 @@
                     model.forms[u].title = newForm.title;
                     model.forms[u].userId = newForm.userId;
                     callback(model.forms[u]);
+                    return;
                 }
             }
             callback(null);
