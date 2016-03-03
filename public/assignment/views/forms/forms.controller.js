@@ -14,7 +14,7 @@
         $scope.addForm = addForm;
         $scope.updateForm = updateForm;
         $scope.deleteForm = deleteForm;
-        //$scope.selectForm = selectForm;
+        $scope.selectForm = selectForm;
 
         // get forms for current user
         if ($scope.user){
@@ -52,6 +52,17 @@
                     }
                 });
             });
+        }
+
+        // select a form, puts information in first row
+        // when update clicked, update this form
+        function selectForm(index){
+            $scope.selectedFormIndex = index;
+
+            $scope.form = {
+                title: $scope.forms[index].title
+            };
+
         }
 
 
