@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module("TennisScheduelerApp")
+        .module("TennisSchedulerApp")
         .config(Configure);
 
     function Configure($routeProvider) {
