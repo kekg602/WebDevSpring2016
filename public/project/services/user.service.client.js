@@ -22,7 +22,8 @@
             findUserByCredentials: findUserByCredentials,
             updateUser: updateUser,
             findAllUsers: findAllUsers,
-            deleteUserById: deleteUserById
+            deleteUserById: deleteUserById,
+            findUserByName: findUserByName
         };
         return model;
 
@@ -42,6 +43,18 @@
         // accepts callback, calls back with all users
         function findAllUsers(callback){
             callback(model.users);
+        }
+
+        // find all users with a certain name
+        function findUserByName(firstName, lastName, callback){
+            var users = null;
+            for (var u in model.users){
+                if (model.users[u].firstName === firstName &&
+                    model.users[u].lastName === lastName){
+                    users.push(model.users[u]);
+                }
+            }
+            callback(users);
         }
 
         // takes in a user and callback
