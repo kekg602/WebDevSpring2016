@@ -75,18 +75,19 @@
         // takes in user id, user object and callback
         // updates that particular user and calls back with updated user
         function updateUser (userId, user, callback) {
-            var user = null;
+            var updatedUser = null;
             for (var u in model.users) {
-                if (model.users[u].userId === userId) {
+                if (model.users[u]._id === userId) {
                     model.users[u].firstname = user.firstName;
                     model.users[u].lastname = user.lastName;
                     model.users[u].username = user.username;
                     model.users[u].password = user.password;
                     model.users[u].roles = user.roles;
-                    user = model.users[u];
+                    updatedUser = model.users[u];
+                    console.log("there is a user");
                 }
             }
-            callback(user);
+            callback(updatedUser);
         }
 
     }
