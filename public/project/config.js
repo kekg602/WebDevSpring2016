@@ -23,6 +23,10 @@
                 {
                     templateUrl: "views/users/profile.view.html"
                 })
+            .when("/admin",
+                {
+                    templateUrl: "views/admin/admin.view.html"
+                })
             .otherwise({
                     redirectTo: "/home"
             });
