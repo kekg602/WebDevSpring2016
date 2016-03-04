@@ -15,7 +15,8 @@
             createScheduleForAdmin: createScheduleForAdmin,
             findAllSchedulesForAdmin: findAllSchedulesForAdmin,
             deleteScheduleById: deleteScheduleById,
-            updateScheduleById: updateScheduleById
+            updateScheduleById: updateScheduleById,
+            findAllSchedulesForPlayer: findAllSchedulesForPlayer
         };
         return model;
 
