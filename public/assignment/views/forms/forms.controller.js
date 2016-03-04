@@ -18,11 +18,13 @@
 
         // get forms for current user using service
         if ($scope.user){
-            FormService.findAllFormsForUser($scope.user._id, function(forms){
-                if (forms){
-                    $scope.forms = forms;
-                }
-            });
+            FormService.findAllFormsForUser($scope.user._id, findAllFormsForUserCallback);
+        }
+
+        function findAllFormsForUserCallback(forms){
+            if (forms){
+                $scope.forms = forms;
+            }
         }
 
         // add a form
@@ -36,20 +38,22 @@
             // add a form using service, make sure form information was entered
             if (form) {
                 if (form.title) {
-                    FormService.createFormForUser($scope.user._id, form, function (newForm) {
-                        if (newForm) {
-                            $scope.forms.push(newForm);
-                            $scope.form = {};
-                            $scope.message = "Form added successfully";
-                        } else {
-                            $scope.message = "Error adding form";
-                        }
-                    });
+                    FormService.createFormForUser($scope.user._id, form, addFormCallback);
                 } else {
                     $scope.error = "Please enter a form name";
                 }
             } else {
                 $scope.error = "Please enter a form";
+            }
+        }
+
+        function addFormCallback(newForm){
+            if (newForm) {
+                $scope.forms.push(newForm);
+                $scope.form = {};
+                $scope.message = "Form added successfully";
+            } else {
+                $scope.message = "Error adding form";
             }
         }
 
@@ -61,22 +65,24 @@
 
             if ($scope.selectedFormIndex != null){
                 // update the form using service
-                FormService.updateFormById($scope.forms[$scope.selectedFormIndex]._id, form, function (updatedForm) {
-                    if (updatedForm) {
-                        $scope.forms[$scope.selectedFormIndex] = {
-                            _id: updatedForm._id,
-                            title: updatedForm.title,
-                            userId: updatedForm.userId
-                        };
+                FormService.updateFormById($scope.forms[$scope.selectedFormIndex]._id, form, updatedFormCallback);
+            } else {
+                $scope.error = "Error updating form";
+            }
+        }
 
-                        // clear form
-                        $scope.form = {};
-                        $scope.selectedFormIndex = null;
-                        $scope.message = "Form updated successfully";
-                    } else {
-                        $scope.error = "Error updating form";
-                    }
-                });
+        function updateFormCallback(updatedForm){
+            if (updatedForm) {
+                $scope.forms[$scope.selectedFormIndex] = {
+                    _id: updatedForm._id,
+                    title: updatedForm.title,
+                    userId: updatedForm.userId
+                };
+
+                // clear form
+                $scope.form = {};
+                $scope.selectedFormIndex = null;
+                $scope.message = "Form updated successfully";
             } else {
                 $scope.error = "Error updating form";
             }
@@ -92,15 +98,17 @@
             $scope.selectedFormIndex = null;
 
             // delete form using service
-            FormService.deleteFormById($scope.forms[index]._id, function(remainingForms){
-                FormService.findAllFormsForUser($scope.user._id, function(forms){
-                    if (forms){
-                        $scope.forms = forms;
-                        $scope.message = "Form deleted successfuly";
-                    } else {
-                        $scope.error = "Error deleting form";
-                    }
-                });
+            FormService.deleteFormById($scope.forms[index]._id, deleteFormCallback);
+        }
+
+        function deleteFormCallback(remainingForms){
+            FormService.findAllFormsForUser($scope.user._id, function(forms){
+                if (forms){
+                    $scope.forms = forms;
+                    $scope.message = "Form deleted successfuly";
+                } else {
+                    $scope.error = "Error deleting form";
+                }
             });
         }
 

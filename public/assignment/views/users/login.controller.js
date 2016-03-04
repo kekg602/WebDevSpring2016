@@ -11,14 +11,16 @@
         function login(user){
             $scope.message = null;
 
-            UserService.findUserByCredentials(user.username, user.password, function(foundUser){
-                if (foundUser){
-                    $rootScope.currentUser = foundUser;
-                    $location.url("/profile");
-                } else {
-                    $scope.message = "User not found";
-                }
-            });
+            UserService.findUserByCredentials(user.username, user.password, findUserByCredCallback);
+        }
+
+        function findUserByCredCallback(foundUser){
+            if (foundUser){
+                $rootScope.currentUser = foundUser;
+                $location.url("/profile");
+            } else {
+                $scope.message = "User not found";
+            }
         }
     }
 })();

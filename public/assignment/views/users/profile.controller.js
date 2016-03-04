@@ -39,15 +39,17 @@
             }
 
             var userId = $scope.currentUser._id;
-            UserService.updateUser(userId, user, function(updatedUser){
-                if (updatedUser){
-                    $scope.message = "User updated successfully";
-                    $scope.currentUser = updatedUser;
-                    $rootScope.currentUser = updatedUser;
-                } else {
-                    $scope.error = "Unable to update the user";
-                }
-            });
+            UserService.updateUser(userId, user, updateUserCallback);
+        }
+
+        function updateUserCallback(updatedUser){
+            if (updatedUser){
+                $scope.message = "User updated successfully";
+                $scope.currentUser = updatedUser;
+                $rootScope.currentUser = updatedUser;
+            } else {
+                $scope.error = "Unable to update the user";
+            }
         }
     }
 

@@ -24,7 +24,7 @@
                 })
             .when("/admin",
                 {
-                    templateUrl: "views/users/admin.view.html"
+                    templateUrl: "views/admin/admin.view.html"
                 })
             .when("/home",
                 {
@@ -36,7 +36,7 @@
                     controller: "FormController"
                 })
             .otherwise({
-                redirectTo: "views/home/home.view.html"
+                redirectTo: "/home"
             });
     }
 })();
