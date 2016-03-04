@@ -22,7 +22,8 @@
                 })
             .when("/profile",
                 {
-                    templateUrl: "views/users/profile.view.html"
+                    templateUrl: "views/users/profile.view.html",
+                    controller: "ProfileController"
                 })
             .when("/admin",
                 {
