@@ -19,6 +19,10 @@
                 {
                     templateUrl: "views/users/register.view.html"
                 })
+            .when("/profile",
+                {
+                    templateUrl: "views/users/profile.view.html"
+                })
             .otherwise({
                     redirectTo: "/home"
             });
