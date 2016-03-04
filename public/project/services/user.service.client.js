@@ -9,11 +9,14 @@
         var model = {
             users: [
                 {	"_id":123, "firstName":"Alice",            "lastName":"Wonderland",
-                    "username":"alice",  "password":"alice",   "email": "alice@alice.com"},
+                    "username":"alice",  "password":"alice",   "email": "alice@alice.com",
+                    "roles": ["admin", "player"]	},
                 {	"_id":234, "firstName":"Bob",              "lastName":"Hope",
-                    "username":"bob",    "password":"bob",     "email": "bob@bob.com"	},
+                    "username":"bob",    "password":"bob",     "email": "bob@bob.com"	,
+                    "roles": ["admin", "player"]	},
                 {	"_id":345, "firstName":"Charlie",          "lastName":"Brown",
-                    "username":"charlie","password":"charlie", "email": "charlie@charlie.com"	}
+                    "username":"charlie","password":"charlie", "email": "charlie@charlie.com"	,
+                    "roles": ["player"]	}
             ],
             createUser: createUser,
             findUserByCredentials: findUserByCredentials,
@@ -50,6 +53,7 @@
                 lastname: user.lastName,
                 username: user.username,
                 password: user.password,
+                roles: user.roles,
                 email: user.email
             };
             model.users.push(user);
@@ -78,8 +82,8 @@
                     model.users[u].username = user.username;
                     model.users[u].password = user.password;
                     model.users[u].roles = user.roles;
+                    model.users[u].email = user.email;
                     updatedUser = model.users[u];
-                    console.log("there is a user");
                 }
             }
             callback(updatedUser);
