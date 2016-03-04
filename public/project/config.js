@@ -27,6 +27,10 @@
                 {
                     templateUrl: "views/admin/admin.view.html"
                 })
+            .when("/schedule",
+                {
+                    templateUrl: "views/schedule/schedule.view.html"
+                })
             .otherwise({
                     redirectTo: "/home"
             });
