@@ -1,4 +1,4 @@
-<div class="container-fluid" ng-controller="ScheduleController">
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
@@ -9,7 +9,6 @@
                 <tr>
                     <th><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Date</th>
                     <th><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Time</th>
-                    <th><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Location</th>
                     <th><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Players</th>
                     <th><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Available</th>
                     <th>Action</th>
@@ -20,7 +19,6 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
                     <td>
                         <input type="radio" id="availabilityYes" name="availability">
                         <label for="availabilityYes">Yes</label>
@@ -28,17 +26,37 @@
                         <label for="availabilityNo">No</label>
                     </td>
                     <td>
-                        <span ng-click="updateSchedule(schedule)" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </td>
                 </tr>
-                <tr ng-repeat="schedule in schedules">
-                    <td>{{schedule.data}}</td>
-                    <td>{{schedule.time}}</td>
-                    <td>{{schedule.location}}</td>
-                    <td>{{schedule.players}}</td>
-                    <td>{{schedule.availability}}</td>
+                <tr>
+                    <td>2/2/2</td>
+                    <td>10:10am</td>
+                    <td>Alice, Bob</td>
+                    <td/>
                     <td>
-                        <span ng-click="selectForm($index)" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3/3/3</td>
+                    <td>4:00pm</td>
+                    <td>Bob, Max</td>
+                    <td/>
+                    <td>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1/1/1</td>
+                    <td>5:00pm</td>
+                    <td>Max, Alice</td>
+                    <td/>
+                    <td>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </td>
                 </tr>
                 </tbody>

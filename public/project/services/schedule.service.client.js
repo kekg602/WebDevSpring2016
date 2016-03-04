@@ -8,35 +8,34 @@
     function ScheduleService(){
         var model = {
             schedules: [
-                {"_id": "000", "date":"1/1/1", "time":"10:30am", "location":"Boston", "players":["Alice", "Bob"], "admin_id":123},
-                {"_id": "010", "date":"2/2/2", "time":"5:00pm", "location":"Seattle", "players":["Max", "Bob"], "admin_id":123},
-                {"_id": "020", "date":"1/1/1", "time":"4:00pm", "location":"Chicago", "players":["Alice", "Max"], "admin_id":234},
+                {"_id": "000", "date":new Date("2016-04-15T04:00:00.000Z"), "time":new Date("1970-01-01T06:00:00.000Z"), "location":"Boston", "players":["Alice", "Bob"], "admin_id":123},
+                {"_id": "010", "date":new Date("2016-01-01T04:00:00.000Z"), "time":new Date("1970-01-01T06:00:00.000Z"), "location":"Seattle", "players":["Max", "Bob"], "admin_id":123},
+                {"_id": "020", "date":new Date("2016-03-16T04:00:00.000Z"), "time":new Date("1970-01-01T06:00:00.000Z"), "location":"Chicago", "players":["Alice", "Max"], "admin_id":234},
             ],
             createScheduleForAdmin: createScheduleForAdmin,
             findAllSchedulesForAdmin: findAllSchedulesForAdmin,
             deleteScheduleById: deleteScheduleById,
-            updateScheduleById: updateScheduleById,
-            findAllSchedulesForPlayer: findAllSchedulesForPlayer
+            updateScheduleById: updateScheduleById
         };
         return model;
 
-        function createScheduleForAdmin(userId, schedule, callback){
+        function createScheduleForAdmin(adminId, schedule, callback){
             var newSchedule = {
                 _id: (new Date).getTime(),
                 date: schedule.date,
                 time: schedule.time,
                 location: schedule.location,
                 players: schedule.players,
-                admin_id: schedule.admin_id
+                admin_id: adminId
             };
-            model.forms.push(newSchedule);
+            model.schedules.push(newSchedule);
             callback(newSchedule);
         }
 
         function findAllSchedulesForAdmin(userId, callback){
             var userSchedules = [];
             for (var u in model.schedules){
-                if (model.schedules[u].userId === userId){
+                if (model.schedules[u].admin_id === userId){
                     userSchedules.push(model.schedules[u]);
                 }
             }
