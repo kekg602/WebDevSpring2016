@@ -15,8 +15,12 @@
                 {
                     templateUrl: "views/users/login.view.html"
                 })
+            .when("/register",
+                {
+                    templateUrl: "views/users/register.view.html"
+                })
             .otherwise({
-                redirectTo: "/home"
+                    redirectTo: "/home"
             });
     }
 })();
