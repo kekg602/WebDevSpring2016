@@ -39,7 +39,7 @@ module.exports = function() {
     // find a form by specific id
     function findFormById(formId){
         for (var f in mock) {
-            if (mock[f]._id === formId) {
+            if (mock[f]._id === Number(formId)) {
                 return mock[f];
             }
         }
@@ -60,7 +60,7 @@ module.exports = function() {
     function findFormsByUserId(userId){
         var forms = [];
         for (var f in mock){
-            if (mock[f].userId === userId){
+            if (mock[f].userId === Number(userId)){
                 forms.push(mock[f]);
             }
         }
@@ -70,7 +70,7 @@ module.exports = function() {
     // update a form
     function updateForm(formId, updatedForm){
         for (var f in mock) {
-            if (mock[f]._id === formId) {
+            if (mock[f]._id === Number(formId)) {
                 mock[f].title = updatedForm.title;
                 mock[f].userId = updatedForm.userId;
                 mock[f].fields = updatedForm.fields;
@@ -82,7 +82,7 @@ module.exports = function() {
     // remove a form
     function deleteForm(formId){
         for (var f in mock){
-            if (mock[f]._id === formId){
+            if (mock[f]._id === Number(formId)){
                 mock.splice(f, 1);
             }
         }
@@ -92,7 +92,7 @@ module.exports = function() {
     // return the fields in a given form
     function findFieldByFormId(formId){
         for (var f in mock){
-            if (mock[f]._id === formId){
+            if (mock[f]._id === Number(formId)){
                 return mock[f].fields;
             }
         }
@@ -102,9 +102,9 @@ module.exports = function() {
     // return a field from a specific form, with a specific id
     function findFieldByFormIdAndFieldId(formId, fieldId){
         for (var f in mock){
-            if (mock[f]._id === formId){
+            if (mock[f]._id === Number(formId)){
                 for (var fi in mock[f].fields){
-                    if (mock[f].fields[fi]._id === fieldId){
+                    if (mock[f].fields[fi]._id === Number(fieldId)){
                         return mock[f].fields[fi];
                     }
                 }
@@ -116,9 +116,9 @@ module.exports = function() {
     // delete a specific field
     function deleteField(formId, fieldId){
         for (var f in mock){
-            if (mock[f]._id === formId){
+            if (mock[f]._id === Number(formId)){
                 for (var fi in mock[f].fields){
-                    if (mock[f].fields[fi]._id === fieldId){
+                    if (mock[f].fields[fi]._id === Number(fieldId)){
                         mock[f].fields.splice(fi, 1);
                     }
                 }
@@ -131,7 +131,7 @@ module.exports = function() {
     function createField(formId, field){
         field._id = uuid.v1();
         for (var f in mock){
-            if (mock[f]._id === formId){
+            if (mock[f]._id === Number(formId)){
                 mock[f].fields.push(field);
             }
         }
@@ -141,9 +141,9 @@ module.exports = function() {
     // update a field in a form
     function updateField(formId, field, fieldId){
         for (var f in mock){
-            if (mock[f]._id === formId){
+            if (mock[f]._id === Number(formId)){
                 for (var fi in mock[f].fields){
-                    if (mock[f].fields[fi]._id === fieldId){
+                    if (mock[f].fields[fi]._id === Number(fieldId)){
                         mock[f].fields[fi].label = field.label;
                         mock[f].fields[fi].type = field.type;
                         mock[f].fields[fi].placeholder = field.placeholder;
