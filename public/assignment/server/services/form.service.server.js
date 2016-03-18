@@ -8,7 +8,7 @@ module.exports = function(app, formModel){
 
     // get forms belonging to a certain user
     function findFormsByUserId(req, res){
-        var userId = req.params.userId;
+        var userId = Number(req.params.userId);
         var forms = formModel.findFormsByUserId(userId);
         res.json(forms);
     }
@@ -30,7 +30,7 @@ module.exports = function(app, formModel){
     // create a form, specific user id
     function createFormWithUserId(req, res){
         var form = req.body;
-        var userId = req.params.userId;
+        var userId = Number(req.params.userId);
         var forms = formModel.createFormWithUserId(userId, form);
         res.json(forms);
     }

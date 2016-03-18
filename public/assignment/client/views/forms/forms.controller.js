@@ -53,7 +53,7 @@
 
         function addFormResponse(newForm){
             if (newForm.data) {
-                $scope.forms.push(newForm.data);
+                $scope.forms = newForm.data;
                 $scope.form = {};
                 $scope.message = "Form added successfully";
             } else {
