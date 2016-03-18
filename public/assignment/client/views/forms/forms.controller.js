@@ -5,7 +5,7 @@
         .module("FormBuilderApp")
         .controller("FormController", FormController);
 
-    function FormController(FormService, $scope, $rootScope){
+    function FormController(FormService, $scope, $rootScope, $location){
 
         // get current user
         $scope.user = $rootScope.currentUser;
@@ -15,12 +15,19 @@
         $scope.updateForm = updateForm;
         $scope.deleteForm = deleteForm;
         $scope.selectForm = selectForm;
+        $scope.showFields = showFields;
 
         // get forms for current user using service
         if ($scope.user){
             FormService
                 .findAllFormsForUser($scope.user._id)
                 .then(findAllFormsForUserResponse);
+        }
+
+        // navigate to fields page with specfic form id
+        function showFields(index){
+            $scope.formId = $scope.forms[index]._id;
+            $location.path('/form/' +  $scope.formId + '/fields');
         }
 
         function findAllFormsForUserResponse(forms){
