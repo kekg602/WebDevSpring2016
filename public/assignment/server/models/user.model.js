@@ -1,4 +1,5 @@
 var mock = require("./user.mock.json");
+var uuid = require('node-uuid');
 
 module.exports = function(){
     var api = {
@@ -14,7 +15,7 @@ module.exports = function(){
 
     // create a new user from information taken in, return all
     function createUser(user){
-        user._id = "ID_" + (new Date()).getTime();
+        user._id = uuid.v1();
         mock.push(user);
         return mock;
     }

@@ -1,11 +1,14 @@
 var mock = require("./form.mock.json");
+var uuid = require('node-uuid');
 
 module.exports = function() {
     var api = {
         createForm: createForm,
+        createFormWithUserId: createFormWithUserId,
         findAllForms: findAllForms,
         findFormById: findFormById,
         findFormByTitle: findFormByTitle,
+        findFormsByUserId: findFormsByUserId,
         updateForm: updateForm,
         deleteForm: deleteForm
     };
@@ -13,7 +16,14 @@ module.exports = function() {
 
     // make a new form and add it, return collection
     function createForm(form){
-        form._id = "ID_" + (new Date()).getTime();
+        form._id = uuid.v1();
+        mock.push(form);
+        return mock;
+    }
+
+    function createFormWithUserId(userId, form){
+        form._id = uuid.v1();
+        form.userId = userId;
         mock.push(form);
         return mock;
     }
@@ -43,6 +53,17 @@ module.exports = function() {
         return null;
     }
 
+    // find forms belonging to a certain user
+    function findFormsByUserId(userId){
+        var forms = [];
+        for (var f in mock){
+            if (mock[f].userId === userId){
+                forms.push(mock[f]);
+            }
+        }
+        return forms;
+    }
+
     // update a form
     function updateForm(formId, updatedForm){
         for (var f in mock) {
@@ -52,6 +73,7 @@ module.exports = function() {
                 mock[f].fields = updatedForm.fields;
             }
         }
+        return mock;
     }
 
     // remove a form
@@ -61,5 +83,6 @@ module.exports = function() {
                 mock.splice(f, 1);
             }
         }
+        return mock;
     }
 }

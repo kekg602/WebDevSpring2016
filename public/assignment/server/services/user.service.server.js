@@ -15,8 +15,12 @@ module.exports = function(app, userModel){
 
     // get and return all users
     function findUsers(req, res){
-        if (req.params.credentials){
-            var credentials = req.params.credentials;
+        if (req.params.username && req.params.password){
+            var credentials = {
+              username: req.params.username,
+              password: req.params.password
+            };
+            
             var user = userModel.findUserByCredentials(credentials);
             res.json(user);
         } else if (req.params.username){
@@ -38,8 +42,9 @@ module.exports = function(app, userModel){
 
     // update a user
     function updateUser(req, res){
+        var updatedUser = req.body;
         var id = req.params.id;
-        var users = userModel.updateUser(id);
+        var users = userModel.updateUser(id, updatedUser);
         res.json(users);
     }
 
