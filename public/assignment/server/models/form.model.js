@@ -26,9 +26,9 @@ module.exports = function() {
 
     function createFormWithUserId(userId, form){
         form._id = uuid.v1();
-        form.userId = Number(userId);
+        form.userId = userId;
         mock.push(form);
-        var forms = findFormsByUserId(Number(userId));
+        var forms = findFormsByUserId(userId);
         return forms;
     }
 
@@ -40,7 +40,7 @@ module.exports = function() {
     // find a form by specific id
     function findFormById(formId){
         for (var f in mock) {
-            if (mock[f]._id === Number(formId)) {
+            if (mock[f]._id === formId) {
                 return mock[f];
             }
         }
@@ -61,7 +61,7 @@ module.exports = function() {
     function findFormsByUserId(userId){
         var forms = [];
         for (var f in mock){
-            if (mock[f].userId === Number(userId)){
+            if (mock[f].userId === userId){
                 forms.push(mock[f]);
             }
         }

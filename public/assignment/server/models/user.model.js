@@ -28,7 +28,7 @@ module.exports = function(){
     // takes in id and finds user with that id
     function findUserById(id){
         for (var u in mock) {
-            if (mock[u]._id === Number(id)) {
+            if (mock[u]._id === id) {
                 return mock[u];
             }
         }
@@ -59,7 +59,7 @@ module.exports = function(){
     // update the given user
     function updateUser(userId, updatedUser){
         for (var u in mock) {
-            if (mock[u]._id === Number(userId)) {
+            if (mock[u]._id === userId) {
                 mock[u].firstName = updatedUser.firstName;
                 mock[u].lastName = updatedUser.lastName;
                 mock[u].username = updatedUser.username;
@@ -74,7 +74,7 @@ module.exports = function(){
     // delete a user
     function deleteUser(userId){
         for (var u in mock){
-            if (mock[u]._id === Number(userId)){
+            if (mock[u]._id === userId){
                 mock.splice(u, 1);
             }
         }
