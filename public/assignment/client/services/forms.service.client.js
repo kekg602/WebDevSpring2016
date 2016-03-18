@@ -5,14 +5,14 @@
         .module("FormBuilderApp")
         .factory("FormService", FormService);
 
-    function FormService(){
-        var model = {
+    function FormService($http){
+        var api = {
             createFormForUser: createFormForUser,
             findAllFormsForUser: findAllFormsForUser,
             deleteFormById: deleteFormById,
             updateFormById: updateFormById
         };
-        return model;
+        return api;
 
         function createFormForUser(userId, form){
             return $http.post ("/api/assignment/user/" + userId + "/form", form);
