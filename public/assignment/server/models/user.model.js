@@ -65,6 +65,7 @@ module.exports = function(){
                 mock[u].password = updatedUser.password;
             }
         }
+        return mock;
     }
 
     // delete a user
@@ -74,6 +75,7 @@ module.exports = function(){
                 mock.splice(u, 1);
             }
         }
+        return mock;
     }
     
 }
