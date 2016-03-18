@@ -11,16 +11,23 @@
         function login(user){
             $scope.message = null;
 
-            UserService.findUserByCredentials(user.username, user.password, findUserByCredCallback);
+            UserService
+                .findUserByCredentials(user.username, user.password)
+                .then(renderUserCred, renderError);
         }
 
-        function findUserByCredCallback(foundUser){
-            if (foundUser){
-                $rootScope.currentUser = foundUser;
+        function renderUserCred(response){
+            console.log("login response" + response);
+            if (response){
+                $rootScope.currentUser = response;
                 $location.url("/profile");
             } else {
                 $scope.message = "User not found";
             }
+        }
+
+        function renderError(error){
+            $scope.message = "Error logging in";
         }
     }
 })();
