@@ -17,11 +17,11 @@
         return api;
 
         function findUserByCredentials(username, password) {
-            return $http.get ("/api/assignment/user?username=<username>&password=<password>");
+            return $http.get ("/api/assignment/user?username=" + username + "&password=" + password);
         }
 
         function findUserByUsername(username){
-            return $http.get ("/api/assignment/user?username=<username>");
+            return $http.get ("/api/assignment/user?username=" + username);
         }
 
         function findAllUsers(){

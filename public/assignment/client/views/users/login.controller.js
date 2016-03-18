@@ -17,9 +17,8 @@
         }
 
         function renderUserCred(response){
-            console.log("login response" + response);
-            if (response){
-                $rootScope.currentUser = response;
+            if (response.data){
+                $rootScope.currentUser = response.data;
                 $location.url("/profile");
             } else {
                 $scope.message = "User not found";

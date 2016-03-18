@@ -15,21 +15,25 @@ module.exports = function(app, userModel){
 
     // get and return all users
     function findUsers(req, res){
-        if (req.params.username && req.params.password){
+        var username = req.query.username;
+        var password = req.query.password;
+        if (username && password){
             var credentials = {
-              username: req.params.username,
-              password: req.params.password
+              username: username,
+              password: password
             };
             
             var user = userModel.findUserByCredentials(credentials);
             res.json(user);
-        } else if (req.params.username){
-            var username = req.params.username;
-            var user = userModel.findUserByUsername(username);
-            res.json(user);
-        } else {
-            var users = userModel.findAllUsers();
-            res.json(users);
+        } else if (username == null && password == null){
+            username = req.params.username;
+            if (username){
+                var user = userModel.findUserByUsername(username);
+                res.json(user);
+            } else {
+                var users = userModel.findAllUsers();
+                res.json(users);
+            }
         }
     }
 
