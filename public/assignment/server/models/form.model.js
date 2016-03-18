@@ -76,7 +76,8 @@ module.exports = function() {
                 mock[f].fields = updatedForm.fields;
             }
         }
-        return mock;
+        var forms = findFormsByUserId(updatedForm.userId);
+        return forms;
     }
 
     // remove a form

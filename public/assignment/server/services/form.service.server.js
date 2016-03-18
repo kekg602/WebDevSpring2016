@@ -27,7 +27,7 @@ module.exports = function(app, formModel){
         res.json(forms);
     }
 
-    // create a form, specificy user idd
+    // create a form, specific user id
     function createFormWithUserId(req, res){
         var form = req.body;
         var userId = req.params.userId;
@@ -38,7 +38,7 @@ module.exports = function(app, formModel){
     // update a form
     function updateForm(req, res){
         var form = req.body;
-        var formId = req.params.id;
+        var formId = req.params.formId;
         var forms = formModel.updateForm(formId, form);
         res.json(forms);
     }
