@@ -15,9 +15,19 @@
 
         // get fields and form
         if ($scope.formId){
+            FormService
+                .findFormById($scope.formId)
+                .then(retrievedForm);
+
             FieldService
                 .getFieldsForForm($scope.formId)
                 .then(retrievedFields);
+        }
+
+        function retrievedForm(response){
+            if (response.data){
+                $scope.title = response.data.title;
+            }
         }
 
         function retrievedFields(response){
