@@ -9,8 +9,8 @@ module.exports = function(app, userModel){
     // create user and return all users
     function createUser(req, res){
         var user = req.body;
-        var users = userModel.createUser(user);
-        res.json(users);
+        var newUser = userModel.createUser(user);
+        res.json(newUser);
     }
 
     // get and return all users
@@ -25,8 +25,7 @@ module.exports = function(app, userModel){
             
             var user = userModel.findUserByCredentials(credentials);
             res.json(user);
-        } else if (username == null && password == null){
-            username = req.params.username;
+        } else if (password == null){
             if (username){
                 var user = userModel.findUserByUsername(username);
                 res.json(user);

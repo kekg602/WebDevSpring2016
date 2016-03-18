@@ -17,7 +17,7 @@ module.exports = function(){
     function createUser(user){
         user._id = uuid.v1();
         mock.push(user);
-        return mock;
+        return user;
     }
 
     // get all of the users
