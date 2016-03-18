@@ -10,8 +10,10 @@
             <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
 
             <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="forms.view.html">Forms</a></li>
-                <li role="presentation"><a href="fields.view.html">Fields</a></li>
+                <li role="presentation" ng-class="{'active': $location.url()==='/forms'}">
+                    <a href="#/forms">Forms</a></li>
+                <li role="presentation" ng-class="{'active': $location.url()==='/fields'}">
+                    <a href="#/fields">Fields</a></li>
             </ul>
 
             <table class="table table-striped">

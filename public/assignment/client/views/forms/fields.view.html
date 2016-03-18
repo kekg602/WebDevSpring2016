@@ -11,8 +11,10 @@
 
             <h1>Forms: Registration Form</h1>
             <ul class="nav nav-tabs">
-                <li role="presentation"><a href="forms.view.html">Forms</a></li>
-                <li role="presentation" class="active"><a href="fields.view.html">Fields</a></li>
+                <li role="presentation" ng-class="{'active': $location.url()==='/forms'}">
+                    <a href="#/forms">Forms</a></li>
+                <li role="presentation" ng-class="{'active': $location.url()==='/fields'}">
+                    <a href="#/fields">Fields</a></li>
             </ul>
 
             <br/>
