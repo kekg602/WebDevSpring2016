@@ -11,6 +11,7 @@
 
         $scope.addField = addField;
         $scope.removeField = removeField;
+        $scope.showPopup = showPopup;
 
         // get fields and form
         if ($scope.formId){
@@ -72,43 +73,53 @@
             }
         }
 
-        $scope.items = ['item1', 'item2', 'item3'];
-
-        $scope.open = function (size) {
+        // show a dialog that corresponds to the field chosen to edit
+        function showPopup(index){
 
             var modalInstance = $uibModal.open({
-                templateUrl: 'myModalContent.html',
+                templateUrl: 'views/forms/editdialog.view.html',
                 controller: 'ModalInstanceController',
-                size: size,
                 resolve: {
-                    items: function () {
-                        return $scope.items;
+                    field: function () {
+                        return $scope.fields[index];
                     }
                 }
             });
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
+            modalInstance.result.then(function (updatedField) {
+                $scope.fields[index] = updatedField;
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+                console.log('Modal dismissed at: ' + new Date());
             });
-        };
+        }
     }
 
-    // extra controller for the dialog
+    // controller for the dialog
     angular
         .module("FormBuilderApp")
         .controller("ModalInstanceController", ModalInstanceController);
 
-    function ModalInstanceController($scope, $uibModalInstance, items) {
+    function ModalInstanceController($scope, $uibModalInstance, field) {
 
-        $scope.items = items;
-        $scope.selected = {
-            item: $scope.items[0]
-        };
+        $scope.field = field;
+        $scope.fieldType = $scope.field.type;
+
+        if ($scope.fieldType === "TEXT"){
+            $scope.fieldTitle = "Single Line Field";
+        } else if ($scope.fieldType === "TEXTAREA"){
+            $scope.fieldTitle = "Multiple Lines Field";
+        } else if ($scope.fieldType === "DATE"){
+            $scope.fieldTitle = "Date Field";
+        } else if ($scope.fieldType === "OPTIONS"){
+            $scope.fieldTitle = "Dropdown Field";
+        } else if ($scope.fieldType === "CHECKBOXES"){
+            $scope.fieldTitle = "Checkbox Field";
+        } else if ($scope.fieldType === "RADIOS"){
+            $scope.fieldTitle = "Radio Button Field";
+        }
 
         $scope.ok = function () {
-            $uibModalInstance.close($scope.selected.item);
+            $uibModalInstance.close($scope.field);
         };
 
         $scope.cancel = function () {
