@@ -12,7 +12,7 @@ module.exports = function(){
     };
     return api;
 
-    // create a new user from information taken in
+    // create a new user from information taken in, return all
     function createUser(user){
         user._id = "ID_" + (new Date()).getTime();
         mock.push(user);
