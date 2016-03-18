@@ -65,7 +65,12 @@
                 ]};
             }
 
+            if ($scope.fields == null){
+                $scope.fields = [];
+            }
+
             $scope.fields.push(field);
+
         }
 
         function removeField(index){
@@ -97,7 +102,10 @@
             });
 
             modalInstance.result.then(function (updatedField) {
-                $scope.fields[index] = updatedField;
+                FieldService
+                    .updateField($scope.formId, $scope.fields[index]._id, updatedField)
+                    .then(showAllFields);
+
             }, function () {
                 console.log('Modal dismissed at: ' + new Date());
             });
@@ -111,8 +119,30 @@
 
     function ModalInstanceController($scope, $uibModalInstance, field) {
 
-        $scope.field = field;
-        $scope.fieldType = $scope.field.type;
+        if (field.options != null){
+            $scope.dialogField = {
+                id: field._id,
+                label: field.label,
+                type: field.type,
+                options: field.options
+            };
+        } else if (field.placeholder != null){
+            $scope.dialogField = {
+                id: field._id,
+                label: field.label,
+                type: field.type,
+                placeholder: field.placeholder
+            };
+        } else {
+            $scope.dialogField = {
+                id: field._id,
+                label: field.label,
+                type: field.type
+            };
+        }
+
+        $scope.fieldType = field.type;
+        $scope.optionslist = [];
 
         if ($scope.fieldType === "TEXT"){
             $scope.fieldTitle = "Single Line Field";
@@ -124,7 +154,7 @@
             $scope.fieldTitle = "Dropdown Field";
 
             var optionsList = [];
-            var options = $scope.field.options;
+            var options = $scope.dialogField.options;
             for (var o in options){
                 optionsList.push(options[o].label + ':' + options[o].value);
             }
@@ -134,7 +164,7 @@
             $scope.fieldTitle = "Checkbox Field";
 
             var optionsList = [];
-            var options = $scope.field.options;
+            var options = $scope.dialogField.options;
             for (var o in options){
                 optionsList.push(options[o].label + ':' + options[o].value);
             }
@@ -143,7 +173,7 @@
             $scope.fieldTitle = "Radio Button Field";
 
             var optionsList = [];
-            var options = $scope.field.options;
+            var options = $scope.dialogField.options;
             for (var o in options){
                 optionsList.push(options[o].label + ':' + options[o].value);
             }
@@ -151,7 +181,23 @@
         }
 
         $scope.ok = function () {
-            $uibModalInstance.close($scope.field);
+            if ($scope.optionslist != null){
+                $scope.dialogField.options = [];
+                for (var o in $scope.optionslist){
+                    var option = $scope.optionslist[o].split(":");
+                    var label = option[0];
+                    var value = option[1];
+
+                    var newOption = {
+                        label: label,
+                        value: value
+                    };
+
+                    $scope.dialogField.options.push(newOption);
+                }
+            }
+
+            $uibModalInstance.close($scope.dialogField);
         };
 
         $scope.cancel = function () {

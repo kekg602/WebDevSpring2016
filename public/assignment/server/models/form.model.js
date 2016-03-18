@@ -152,12 +152,17 @@ module.exports = function() {
                     if (mock[f].fields[fi]._id === fieldId){
                         mock[f].fields[fi].label = field.label;
                         mock[f].fields[fi].type = field.type;
-                        mock[f].fields[fi].placeholder = field.placeholder;
-                        mock[f].fields[fi].options = field.options;
+
+                        if (mock[f].fields[fi].placeholder != null){
+                            mock[f].fields[fi].placeholder = field.placeholder;
+                        } else {
+                            mock[f].fields[fi].options = field.options;
+                        }
+                        return mock[f].fields;
                     }
                 }
             }
         }
-        return mock;
+        return null;
     }
 }

@@ -1,14 +1,14 @@
 <div class="modal-dialog">
     <div class="modal-header ng-scope">{{fieldTitle}}</div>
-    <div class="modal-body ng-scope" ng-switch="field.type">
+    <div class="modal-body ng-scope" ng-switch="dialogField.type">
         <label for="label">Label: </label>
-        <input ng-model="field.label" type="text" class="form-control" id="label" placeholder="Enter a label">
+        <input ng-model="dialogField.label" type="text" class="form-control" id="label" placeholder="Enter a label">
 
         <label ng-switch-when="TEXT" for="placeholdertext">Placeholder: </label>
-        <input ng-switch-when="TEXT" ng-model="field.placeholder" type="text" class="form-control" id="placeholdertext" placeholder="Enter a placeholder">
+        <input ng-switch-when="TEXT" ng-model="dialogField.placeholder" type="text" class="form-control" id="placeholdertext" placeholder="Enter a placeholder">
 
         <label ng-switch-when="TEXTAREA" for="placeholder">Placeholder: </label>
-        <input ng-switch-when="TEXTAREA" ng-model="field.placeholder" type="text" class="form-control" id="placeholder" placeholder="Enter a placeholder">
+        <input ng-switch-when="TEXTAREA" ng-model="dialogField.placeholder" type="text" class="form-control" id="placeholder" placeholder="Enter a placeholder">
 
         <label ng-switch-when="OPTIONS" for="options">Options</label>
         <textarea ng-switch-when="OPTIONS" ng-model="optionslist" ng-list="&#10;" id="options" type="text" class="form-control"  ng-trim="false">
