@@ -117,27 +117,31 @@ module.exports = function() {
 
     // delete a specific field
     function deleteField(formId, fieldId){
+        var fields = [];
         for (var f in mock){
             if (mock[f]._id === formId){
                 for (var fi in mock[f].fields){
                     if (mock[f].fields[fi]._id === fieldId){
                         mock[f].fields.splice(fi, 1);
+                        fields = mock[f].fields;
                     }
                 }
             }
         }
-        return mock;
+        return fields;
     }
 
-    // create a field in a form
+    // create a field in a form, return all fields in that form
     function createField(formId, field){
+        var fields = [];
         field._id = uuid.v1();
         for (var f in mock){
             if (mock[f]._id === formId){
                 mock[f].fields.push(field);
+                fields = mock[f].fields;
             }
         }
-        return mock;
+        return fields;
     }
 
     // update a field in a form
