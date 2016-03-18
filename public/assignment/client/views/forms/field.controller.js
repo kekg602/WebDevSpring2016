@@ -10,7 +10,7 @@
         $scope.formId = $routeParams.formId;
 
         $scope.addField = addField;
-        $scope.deletefield = deleteField;
+        $scope.removeField = removeField;
 
         // get fields and form
         if ($scope.formId){
@@ -57,8 +57,8 @@
             $scope.fields.push(field);
         }
 
-        function deleteField(field){
-            var fieldId = field._id;
+        function removeField(index){
+            var fieldId = $scope.fields[index]._id;
             FieldService
                 .deleteFieldFromForm($scope.formId, fieldId)
                 .then(showAllFields);
