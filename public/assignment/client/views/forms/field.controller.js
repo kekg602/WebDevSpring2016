@@ -112,10 +112,32 @@
             $scope.fieldTitle = "Date Field";
         } else if ($scope.fieldType === "OPTIONS"){
             $scope.fieldTitle = "Dropdown Field";
+
+            var optionsList = [];
+            var options = $scope.field.options;
+            for (var o in options){
+                optionsList.push(options[o].label + ':' + options[o].value);
+            }
+            $scope.optionslist = optionsList;
+
         } else if ($scope.fieldType === "CHECKBOXES"){
             $scope.fieldTitle = "Checkbox Field";
+
+            var optionsList = [];
+            var options = $scope.field.options;
+            for (var o in options){
+                optionsList.push(options[o].label + ':' + options[o].value);
+            }
+            $scope.optionslist = optionsList;
         } else if ($scope.fieldType === "RADIOS"){
             $scope.fieldTitle = "Radio Button Field";
+
+            var optionsList = [];
+            var options = $scope.field.options;
+            for (var o in options){
+                optionsList.push(options[o].label + ':' + options[o].value);
+            }
+            $scope.optionslist = optionsList;
         }
 
         $scope.ok = function () {
