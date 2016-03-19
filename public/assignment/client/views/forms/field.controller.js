@@ -9,6 +9,11 @@
 
         $scope.formId = $routeParams.formId;
 
+        // list of fields for sortable purposes
+        var tmpList = [];
+        $scope.list = [];
+        $scope.sortingLog = [];
+
         $scope.addField = addField;
         $scope.removeField = removeField;
         $scope.showPopup = showPopup;
@@ -33,6 +38,8 @@
         function retrievedFields(response){
             if (response.data){
                 $scope.fields = response.data;
+                tmpList = response.data;
+                $scope.list = tmpList;
             }
         }
 
@@ -110,6 +117,22 @@
                 console.log('Modal dismissed at: ' + new Date());
             });
         }
+
+        $scope.sortableOptions = {
+            update: function(e, ui) {
+                var logEntry = tmpList.map(function(i){
+                    return i.value;
+                }).join(', ');
+                $scope.sortingLog.push('Update: ' + logEntry);
+            },
+            stop: function(e, ui) {
+                // this callback has the changed model
+                var logEntry = tmpList.map(function(i){
+                    return i.value;
+                }).join(', ');
+                $scope.sortingLog.push('Stop: ' + logEntry);
+            }
+        };
     }
 
     // controller for the dialog
@@ -211,5 +234,4 @@
             $uibModalInstance.dismiss('cancel');
         };
     }
-
 })();
