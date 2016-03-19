@@ -119,6 +119,10 @@
 
     function ModalInstanceController($scope, $uibModalInstance, field) {
 
+        $scope.fieldType = field.type;
+        $scope.optionslist = [];
+        $scope.ok = ok;
+
         if (field.options != null){
             $scope.dialogField = {
                 id: field._id,
@@ -141,8 +145,17 @@
             };
         }
 
-        $scope.fieldType = field.type;
-        $scope.optionslist = [];
+        var optionsList = [];
+        var options = field.options;
+        if (options != null){
+            for (var o in options){
+                optionsList.push(options[o].label + ':' + options[o].value);
+            }
+
+            console.log(optionsList);
+            $scope.optionslist = optionsList;
+        }
+
 
         if ($scope.fieldType === "TEXT"){
             $scope.fieldTitle = "Single Line Field";
@@ -152,53 +165,47 @@
             $scope.fieldTitle = "Date Field";
         } else if ($scope.fieldType === "OPTIONS"){
             $scope.fieldTitle = "Dropdown Field";
-
-            var optionsList = [];
-            var options = $scope.dialogField.options;
-            for (var o in options){
-                optionsList.push(options[o].label + ':' + options[o].value);
-            }
-            $scope.optionslist = optionsList;
-
         } else if ($scope.fieldType === "CHECKBOXES"){
             $scope.fieldTitle = "Checkbox Field";
-
-            var optionsList = [];
-            var options = $scope.dialogField.options;
-            for (var o in options){
-                optionsList.push(options[o].label + ':' + options[o].value);
-            }
-            $scope.optionslist = optionsList;
         } else if ($scope.fieldType === "RADIOS"){
             $scope.fieldTitle = "Radio Button Field";
-
-            var optionsList = [];
-            var options = $scope.dialogField.options;
-            for (var o in options){
-                optionsList.push(options[o].label + ':' + options[o].value);
-            }
-            $scope.optionslist = optionsList;
         }
 
-        $scope.ok = function () {
-            if ($scope.optionslist != null){
-                $scope.dialogField.options = [];
-                for (var o in $scope.optionslist){
-                    var option = $scope.optionslist[o].split(":");
-                    var label = option[0];
-                    var value = option[1];
+        function ok() {
 
-                    var newOption = {
-                        label: label,
-                        value: value
+            var options;
+
+            if ($scope.dialogField.type === "OPTIONS"){
+                options = $("#options").val();
+                console.log(options);
+            } else if ($scope.dialogField.type === "CHECKBOXES"){
+                options = $("#checkboxes").val();
+            } else if ($scope.dialogField.type === "RADIOS"){
+                options = $("#radios").val();
+            }
+
+            if (options != null){
+                // get values in textarea
+
+                var oplist = options.split("\n");
+                var jsonOp = [];
+
+                for (var o in oplist){
+                    var values = oplist[o].split(":");
+                    var entry = {
+                        label: values[0],
+                        value: values[1]
                     };
-
-                    $scope.dialogField.options.push(newOption);
+                    console.log(entry);
+                    jsonOp.push(entry);
                 }
+
+                $scope.dialogField.options = jsonOp;
+                console.log("options" + $scope.dialogField.options[0].value);
             }
 
             $uibModalInstance.close($scope.dialogField);
-        };
+        }
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
