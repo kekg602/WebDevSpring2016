@@ -47,7 +47,7 @@
 
         // find all users with a certain name
         function findUserByName(firstName, lastName, callback){
-            var users = null;
+            var users = [];
             for (var u in model.users){
                 if (model.users[u].firstName === firstName &&
                     model.users[u].lastName === lastName){
@@ -87,7 +87,7 @@
         // takes in user id, user object and callback
         // updates that particular user and calls back with updated user
         function updateUser (userId, user, callback) {
-            var updatedUser = null;
+            var updatedUser = [];
             for (var u in model.users) {
                 if (model.users[u]._id === userId) {
                     model.users[u].firstname = user.firstName;
