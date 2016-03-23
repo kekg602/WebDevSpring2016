@@ -9,12 +9,12 @@
         $routeProvider
             .when("/home",
                 {
-                    templateUrl: "views/home/home.view.html"
+                    templateUrl: "views/home/home.view.html",
+                    controller: "LoginController"
                 })
             .when("/login",
                 {
-                    templateUrl: "views/users/login.view.html",
-                    controller: "LoginController"
+                    templateUrl: "views/users/login.view.html"
                 })
             .when("/register",
                 {
