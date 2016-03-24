@@ -50,6 +50,7 @@
         function profilePage(index){
             $scope.playerId = $scope.players[index]._id;
             $location.path('/profile/' +  $scope.playerId);
+            console.log($scope.playerId);
         }
     }
 })();

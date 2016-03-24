@@ -13,7 +13,8 @@
             findAllUsers: findAllUsers,
             deleteUserById: deleteUserById,
             findUserByName: findUserByName,
-            searchUserByName: searchUserByName
+            searchUserByName: searchUserByName,
+            findUserById: findUserById
         };
         return model;
 
@@ -31,6 +32,11 @@
         // find all users with a certain name
         function findUserByName(firstName, lastName){
             return $http.get("/api/project/user?firstname=" + firstName + "&lastname=" + lastName);
+        }
+
+        // find user by id
+        function findUserById(userId){
+            return $http.get("/api/project/user/" + userId);
         }
 
         // takes in a user and callback

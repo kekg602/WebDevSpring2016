@@ -22,7 +22,7 @@
                     templateUrl: "views/users/register.view.html",
                     controller: "RegisterController"
                 })
-            .when("/profile/:username",
+            .when("/profile/:playerId",
                 {
                     templateUrl: "views/users/playerprofile.view.html",
                     controller: "PlayerProfileController"
