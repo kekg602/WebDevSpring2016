@@ -5,11 +5,12 @@
         .module("TennisSchedulerApp")
         .controller("ScheduleController", ScheduleController);
 
-    function ScheduleController($rootScope, $scope, ScheduleService, UserScheduleAvailabilityService){
+    function ScheduleController($rootScope, $scope, $location, ScheduleService, UserScheduleAvailabilityService){
 
         $scope.updateAvailability = updateAvailability;
         $scope.selectSchedule = selectSchedule;
         $scope.getAvailability = getAvailability;
+        $scope.showScheduleDetails = showScheduleDetails;
 
         if ($rootScope.currentUser){
             $scope.userId = $rootScope.currentUser._id;
@@ -146,6 +147,12 @@
                 availability: $scope.schedules[index].availability
             };
 
+        }
+
+        // navigate to the schedule details page
+        function showScheduleDetails(index){
+            $scope.scheduleId = $scope.schedules[index]._id;
+            $location.path('/schedule/' +  $scope.scheduleId);
         }
 
     }

@@ -37,6 +37,11 @@
                     templateUrl: "views/admin/admin.view.html",
                     controller: "AdminScheduleController"
                 })
+            .when("/schedule/:scheduleId",
+                {
+                    templateUrl: "views/schedule/scheduleDetails.view.html",
+                    controller: "ScheduleDetailController"
+                })
             .when("/schedule",
                 {
                     templateUrl: "views/schedule/schedule.view.html",
