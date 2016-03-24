@@ -3,7 +3,7 @@ var uuid = require('node-uuid');
 
 module.exports = function() {
     var api = {
-        createScheduleWithAdminId: createScheduleWithAdminId,
+        createSchedule: createSchedule,
         findScheduleByAdminId: findScheduleByAdminId,
         findScheduleByUsername: findScheduleByUsername,
         deleteSchedule: deleteSchedule,
@@ -14,12 +14,11 @@ module.exports = function() {
 
     // create a new schedule, add it and return schedules
     // created by user id
-    function createScheduleWithAdminId(adminId, schedule){
+    function createSchedule(schedule){
         schedule._id = uuid.v1();
-        schedule.adminId = adminId;
         mock.push(schedule);
-        var schedules = findScheduleByAdminId(adminId);
-        return mock;
+        var schedules = findScheduleByAdminId(schedule.adminId);
+        return schedules;
     }
 
     // get a list of schedules based on the creator
