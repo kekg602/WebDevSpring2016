@@ -7,7 +7,7 @@ module.exports = function() {
         createAvailabilityEntry: createAvailabilityEntry,
         findAvailabilityEntry: findAvailabilityEntry,
         updateAvailabilityEntry: updateAvailabilityEntry,
-        deleteAvailability: deleteAvailability
+        deleteAvailabilityEntry: deleteAvailabilityEntry
     };
     return api;
 
