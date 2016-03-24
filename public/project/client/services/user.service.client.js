@@ -18,7 +18,7 @@
 
         // accepts params username, password and callback
         // returns callback with user if found
-        function findUserByCredentials(username, password, callback) {
+        function findUserByCredentials(username, password) {
             return $http.get("/api/project/user?username=" + username + "&password=" + password);
         }
 
