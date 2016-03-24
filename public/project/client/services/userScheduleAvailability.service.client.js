@@ -26,8 +26,8 @@
             return $http.delete("/api/project/avail/" + userId + "/" + scheduleId);
         }
 
-        function updateAvailabilityEntry(userId, scheduleId, updatedAvailability){
-            return $http.put("/api/project/avail/" + userId + "/" + scheduleId, updatedAvailability);
+        function updateAvailabilityEntry(updatedAvailability){
+            return $http.put("/api/project/avail", updatedAvailability);
         }
 
     }

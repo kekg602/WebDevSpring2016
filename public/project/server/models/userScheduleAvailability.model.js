@@ -14,7 +14,7 @@ module.exports = function() {
     // add an availability
     function createAvailabilityEntry(availability){
         mock.push(availability);
-        return mock;
+        return availability;
     }
 
     // get a user's availability for a specific schedule
@@ -29,11 +29,11 @@ module.exports = function() {
     }
 
     // update a user's availability for a certain schedule entry
-    function updateAvailabilityEntry(userId, scheduleId, availability){
+    function updateAvailabilityEntry(updatedAvailability){
         for (var x in mock){
-            if (mock[x].userId === userId &&
-            mock[x].scheduleId === scheduleId){
-                mock[x].availability = availability;
+            if (mock[x].userId === updatedAvailability.userId &&
+            mock[x].scheduleId === updatedAvailability.scheduleId){
+                mock[x].availability = updatedAvailability.availability;
                 return mock[x];
             }
         }

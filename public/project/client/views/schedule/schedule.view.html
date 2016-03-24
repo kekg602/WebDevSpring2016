@@ -4,6 +4,9 @@
 
             <h1>Schedule</h1>
 
+            <div ng-show="message" class="alert alert-success" role="alert">{{message}}</div>
+            <div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
+
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -24,7 +27,7 @@
                         <label for="availabilityNo">No</label>
                     </td>
                     <td>
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        <span ng-click="updateAvailability(schedule)" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     </td>
                 </tr>
                 <tr ng-repeat="schedule in schedules">

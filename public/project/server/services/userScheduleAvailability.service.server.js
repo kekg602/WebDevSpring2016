@@ -2,13 +2,13 @@ module.exports = function(app, userScheduleAvailabilityModel){
 
     app.post("/api/project/avail", createAvailabilityEntry);
     app.get("/api/project/avail", findAvailEntry);
-    app.put("/api/project/avail/:userId/:scheduleId", updateAvailabilityEntry);
+    app.put("/api/project/avail", updateAvailabilityEntry);
     app.delete("/api/project/avail/:userId/:scheduleId", deleteAvailabilityEntry);
 
     function createAvailabilityEntry(req, res){
         var entry = req.body;
-        var entries = userScheduleAvailabilityModel.createAvailabilityEntry(entry);
-        res.json(entries);
+        entry = userScheduleAvailabilityModel.createAvailabilityEntry(entry);
+        res.json(entry);
     }
 
     function findAvailEntry(req, res){
@@ -19,10 +19,8 @@ module.exports = function(app, userScheduleAvailabilityModel){
     }
 
     function updateAvailabilityEntry(req, res){
-        var userId = req.params.userId;
-        var scheduleId = req.params.scheduleId;
-        var avail = req.body;
-        var entries = userScheduleAvailabilityModel.updateAvailabilityEntry(userId, scheduleId, avail);
+        var updatedAvail = req.body;
+        var entries = userScheduleAvailabilityModel.updateAvailabilityEntry(updatedAvail);
         res.json(entries);
     }
 

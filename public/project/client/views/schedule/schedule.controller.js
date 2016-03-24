@@ -85,17 +85,47 @@
             }
         }
 
-        function updateAvailability(index){
-            var avail = $scope.availability;
-            var scheduleId = $scope.schedules[index]._id;
-            UserScheduleAvailabilityService
-                .updateAvailabilityEntry($scope.userId, scheduleId, avail)
-                .then(updateAvailabilityResponse);
+        function updateAvailability(schedule){
+            if ($scope.selectedScheduleIndex != null){
+                var userAvail = {
+                    availability: schedule.availability,
+                    userId: $scope.currentUser._id,
+                    scheduleId: $scope.schedules[$scope.selectedScheduleIndex]._id
+                }
+
+                if ($scope.schedules[$scope.selectedScheduleIndex].availability != null){
+                    UserScheduleAvailabilityService
+                        .updateAvailabilityEntry(userAvail)
+                        .then(updateAvailabilityResponse);
+                } else {
+                    UserScheduleAvailabilityService
+                        .createAvailabilityEntry(userAvail)
+                        .then(createAvailabilityResponse);
+                }
+
+            }
+        }
+
+        function createAvailabilityResponse(createdEntry){
+            if (createdEntry.data){
+                $scope.message = "Availability successfully updated";
+
+                for (var s in $scope.schedules){
+                    if ($scope.schedules[s]._id === createdEntry.data.scheduleId){
+                        $scope.schedules[s].availability = createdEntry.data.availability;
+                    }
+                }
+
+                $scope.schedule = {};
+            }
         }
 
         function updateAvailabilityResponse(update){
             if (update.data){
                 $scope.message = "Availability successfully updated";
+                $scope.schedules[$scope.selectedScheduleIndex].availability = update.data.availability;
+                $scope.schedule = {};
+                $scope.selectedScheduleIndex = null;
             } else {
                 $scope.error = "Error updating availability";
             }
