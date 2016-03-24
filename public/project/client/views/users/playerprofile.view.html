@@ -5,22 +5,33 @@
 
             <div class="row">
                 <div class="col-sm-offset-1">
-                    {{user.location}}
+                    Location: {{user.location}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-offset-1">
-                    {{user.level}}
+                    USTA Level: {{user.level}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-offset-1">
-                    {{user.username}}
+                    Tennis Scheduler Username: {{user.username}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-offset-1">
-                    {{user.email}}
+                    Email: {{user.email}}
+                </div>
+            </div>
+
+            <br/>
+
+            <h4>Plays with:</h4>
+            <div class="row">
+                <div class="col-sm-offset-1">
+                    <span ng-repeat="player in playsWith" ng-click="profilePage($index)">
+                        {{player}} <br/>
+                    </span>
                 </div>
             </div>
         </div>
