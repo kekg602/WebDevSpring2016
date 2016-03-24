@@ -1,6 +1,7 @@
 module.exports = function(app, userModel){
 
     app.post("/api/project/user", createUser);
+    app.get("/api/project/user/search", searchUserByName);
     app.get("/api/project/user", findUsers);
     app.get("/api/project/user/:id", findUserById);
     app.put("/api/project/user/:id", updateUser);
@@ -13,7 +14,6 @@ module.exports = function(app, userModel){
         res.json(newUser);
     }
 
-    // get and return all users
     function findUsers(req, res){
         var username = req.query.username;
         var password = req.query.password;
@@ -58,6 +58,14 @@ module.exports = function(app, userModel){
     function deleteUser(req, res){
         var id = req.params.id;
         var users = userModel.deleteUser(id);
+        res.json(users);
+    }
+
+    // search function
+    function searchUserByName(req, res){
+        var firstname = req.query.firstname;
+        var lastname = req.query.lastname;
+        var users = userModel.searchUserByName(firstname, lastname);
         res.json(users);
     }
 }

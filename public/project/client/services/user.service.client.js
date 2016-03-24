@@ -12,7 +12,8 @@
             updateUser: updateUser,
             findAllUsers: findAllUsers,
             deleteUserById: deleteUserById,
-            findUserByName: findUserByName
+            findUserByName: findUserByName,
+            searchUserByName: searchUserByName
         };
         return model;
 
@@ -48,6 +49,10 @@
         // updates that particular user and calls back with updated user
         function updateUser (userId, user) {
            return $http.put("/api/project/user/" + userId, user);
+        }
+
+        function searchUserByName(firstName, lastName){
+            return $http.get("/api/project/user/search?firstname=" + firstName + "&lastname=" + lastName);
         }
 
     }
