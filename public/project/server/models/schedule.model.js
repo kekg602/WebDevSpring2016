@@ -60,14 +60,13 @@ module.exports = function() {
     function updateSchedule(scheduleId, updatedSchedule){
         for (var s in mock){
             if (mock[s]._id === scheduleId){
-                mock[s].userId = schedule.userId;
-                mock[s].players = schedule.players;
-                mock[s].location = schedule.location;
-                mock[s].date = schedule.date;
-                mock[s].time = schedule.time;
+                mock[s].players = updatedSchedule.players;
+                mock[s].location = updatedSchedule.location;
+                mock[s].date = updatedSchedule.date;
+                mock[s].time = updatedSchedule.time;
             }
         }
-        var schedules = findScheduleByCreatorUserId(schedule.userId);
+        var schedules = findScheduleByAdminId(updatedSchedule.adminId);
         return schedules;
     }
 

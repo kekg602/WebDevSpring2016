@@ -98,6 +98,7 @@
            if(schedules.data){
                $scope.schedules = schedules.data;
                $scope.message = "Schedule updated successfully";
+               $scope.schedule = {};
            } else {
                $scope.error = "Error updating schedule";
            }
@@ -132,8 +133,8 @@
             $scope.selectedScheduleIndex = index;
 
             $scope.schedule = {
-                date : $scope.schedules[index].date,
-                time : $scope.schedules[index].time,
+                date : new Date($scope.schedules[index].date),
+                time : new Date($scope.schedules[index].time),
                 location : $scope.schedules[index].location,
                 players : $scope.schedules[index].players
             };

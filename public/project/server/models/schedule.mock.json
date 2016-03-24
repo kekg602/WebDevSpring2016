@@ -8,7 +8,7 @@
       "alice",
       "bob"
     ],
-    "adminId": 123
+    "adminId": "123"
   },
   {
     "_id": "010",
@@ -19,7 +19,7 @@
       "charlie",
       "bob"
     ],
-    "adminId": 123
+    "adminId": "123"
   },
   {
     "_id": "020",
@@ -30,6 +30,6 @@
       "alice",
       "charlie"
     ],
-    "adminId": 234
+    "adminId": "234"
   }
 ]

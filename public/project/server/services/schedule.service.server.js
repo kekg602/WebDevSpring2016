@@ -40,7 +40,7 @@ module.exports = function (app, scheduleModel){
     function updateSchedule(req, res){
         var id = req.params.id;
         var updateSchedule = req.body;
-        var schedule = scheduleModel.updateSchedule(id, updatedSchedule);
+        var schedule = scheduleModel.updateSchedule(id, updateSchedule);
         res.json(schedule);
     }
 
