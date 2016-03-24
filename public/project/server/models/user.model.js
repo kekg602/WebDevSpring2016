@@ -9,7 +9,8 @@ module.exports = function(){
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials,
         updateUser: updateUser,
-        deleteUser: deleteUser
+        deleteUser: deleteUser,
+        findUserByName: findUserByName
     };
     return api;
 
@@ -82,6 +83,17 @@ module.exports = function(){
             }
         }
         return mock;
+    }
+
+    // find a user by their first and last name for search
+    function findUserByName(firstName, lastName){
+        for (var u in mock){
+            if (mock[u].firstName === firstName &&
+            mock[u].lastName === lastName){
+                return mock[u];
+            }
+        }
+        return null;
     }
 
 }
