@@ -11,7 +11,8 @@
             findAllSchedulesForAdmin: findAllSchedulesForAdmin,
             deleteScheduleById: deleteScheduleById,
             updateScheduleById: updateScheduleById,
-            findSchedulesByUsername: findSchedulesByUsername
+            findSchedulesByUsername: findSchedulesByUsername,
+            findScheduleById: findScheduleById
         };
         return model;
 
@@ -33,6 +34,10 @@
 
         function findSchedulesByUsername(username){
             return $http.get("/api/project/schedule?username=" + username);
+        }
+
+        function findScheduleById(scheduleId){
+            return $http.get("/api/project/schedule/" + scheduleId);
         }
 
     }
