@@ -67,7 +67,7 @@
 
                 $scope.schedules[s].formattedTime = hours + ":" + minutes + timeOfDay;
 
-
+                console.log($scope.schedules[0].players);
                 for (var p in $scope.schedules[s].players){
                     if (players){
                         players = players + "," + $scope.schedules[s].players[p];
@@ -110,6 +110,12 @@
 
                 schedule.adminId = $scope.user._id;
 
+                // format the input players
+                var temp = schedule.players + "";
+                var playerList = temp.split(",");
+                schedule.players = playerList;
+                console.log(playerList);
+
                 ScheduleService
                     .createScheduleForAdmin(schedule)
                     .then(addScheduleCallback);
@@ -140,12 +146,15 @@
             if ($scope.selectedScheduleIndex != null){
                 schedule.adminId = $scope.user._id;
 
-                var usernames = schedule.players + " ";
-                usernames = usernames.split(",");
+                var usernames = schedule.players + "";
+                console.log(usernames);
+                var list = [];
+                list = usernames.split(",");
+                console.log(list);
                 var newPlayerList = [];
-                for (var u in usernames){
-                    if (usernames[u] != ""){
-                        newPlayerList.push(usernames[u]);
+                for (var u in list){
+                    if (list[u] != ""){
+                        newPlayerList.push(list[u]);
                     }
                 }
 
@@ -164,7 +173,6 @@
                $scope.schedules = schedules.data;
                $scope.message = "Schedule updated successfully";
                $scope.schedule = {};
-               $scope.formattedSchedules = schedules.data;
                formatData();
            } else {
                $scope.error = "Error updating schedule";
