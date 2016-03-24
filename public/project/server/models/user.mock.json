@@ -1,7 +1,43 @@
 [
-  {"_id": "123", "firstName": "Alice", 	"lastName": "Wonderland",	"username": "alice", 	"password": "alice"},
-  {"_id": "234", "firstName": "Bob",	"lastName": "Hope", 		"username": "bob", 	"password": "bob"},
-  {"_id": "345", "firstName": "Charlie","lastName": "Brown", 		"username": "charlie", "password": "charlie"},
-  {"_id": "456", "firstName": "Dan",	"lastName": "Craig", 		"username": "dan", 	"password": "dan"},
-  {"_id": "567", "firstName": "Edward","lastName": "Norton",		"username": "ed",	"password": "ed"}
+  {
+    "_id": "123",
+    "firstName": "Alice",
+    "lastName": "Wonderland",
+    "location": "Boston",
+    "level": "3.0",
+    "username": "alice",
+    "password": "alice",
+    "email": "alice@alice.com",
+    "roles": [
+      "admin",
+      "player"
+    ]
+  },
+  {
+    "_id": "234",
+    "firstName": "Bob",
+    "lastName": "Hope",
+    "location": "Boston",
+    "level": "4.0",
+    "username": "bob",
+    "password": "bob",
+    "email": "bob@bob.com",
+    "roles": [
+      "admin",
+      "player"
+    ]
+  },
+  {
+    "_id": "345",
+    "firstName": "Charlie",
+    "lastName": "Brown",
+    "location": "Seattle",
+    "level": "3.5",
+    "username": "charlie",
+    "password": "charlie",
+    "email": "charlie@charlie.com",
+    "roles": [
+      "player"
+    ]
+  }
 ]

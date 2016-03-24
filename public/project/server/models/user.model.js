@@ -65,6 +65,9 @@ module.exports = function(){
                 mock[u].username = updatedUser.username;
                 mock[u].password = updatedUser.password;
                 mock[u].email = updatedUser.email;
+                mock[u].location = updatedUser.location;
+                mock[u].roles = updatedUser.roles;
+                mock[u].level = updatedUser.level;
                 return mock[u];
             }
         }

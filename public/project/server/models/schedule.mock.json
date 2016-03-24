@@ -1,5 +1,35 @@
 [
-  {"_id": "000", "date":"2016-04-15T04:00:00.000Z", "time":"1970-01-01T06:00:00.000Z", "location":"Boston", "players":["alice", "bob"], "adminId":123},
-  {"_id": "010", "date":"2016-01-01T04:00:00.000Z", "time":"1970-01-01T06:00:00.000Z", "location":"Seattle", "players":["max", "bob"], "adminId":123},
-  {"_id": "020", "date":"2016-03-16T04:00:00.000Z", "time":"1970-01-01T06:00:00.000Z", "location":"Chicago", "players":["alice", "max"], "adminId":234}
+  {
+    "_id": "000",
+    "date": "2016-04-15T04:00:00.000Z",
+    "time": "1970-01-01T06:00:00.000Z",
+    "location": "Boston",
+    "players": [
+      "alice",
+      "bob"
+    ],
+    "adminId": 123
+  },
+  {
+    "_id": "010",
+    "date": "2016-01-01T04:00:00.000Z",
+    "time": "1970-01-01T06:00:00.000Z",
+    "location": "Seattle",
+    "players": [
+      "charlie",
+      "bob"
+    ],
+    "adminId": 123
+  },
+  {
+    "_id": "020",
+    "date": "2016-03-16T04:00:00.000Z",
+    "time": "1970-01-01T06:00:00.000Z",
+    "location": "Chicago",
+    "players": [
+      "alice",
+      "charlie"
+    ],
+    "adminId": 234
+  }
 ]
