@@ -1,24 +1,24 @@
 var mock = require("./userScheduleAvailability.mock.json");
-var uuid = require('node-uuid');
 
 // This model represents a relationship between a user and a schedule
 // It allows users to view/update their set availability for a certain scheduled time
 module.exports = function() {
     var api = {
-        createAvailability: createAvailability,
-        findAvailability: findAvailability,
-        updateAvailability: updateAvailability,
-        removeAvailability: removeAvailability
+        createAvailabilityEntry: createAvailabilityEntry,
+        findAvailabilityEntry: findAvailabilityEntry,
+        updateAvailabilityEntry: updateAvailabilityEntry,
+        deleteAvailability: deleteAvailability
     };
     return api;
 
     // add an availability
-    function createAvailability(availability){
+    function createAvailabilityEntry(availability){
         mock.push(availability);
+        return mock;
     }
 
     // get a user's availability for a specific schedule
-    function findAvailability(userId, scheduleId){
+    function findAvailabilityEntry(userId, scheduleId){
         for (var x in mock){
             if (mock[x].userId === userId &&
                 mock[x].scheduleId === scheduleId){
@@ -29,18 +29,18 @@ module.exports = function() {
     }
 
     // update a user's availability for a certain schedule
-    function updateAvailability(userId, scheduleId, availability){
+    function updateAvailabilityEntry(userId, scheduleId, availability){
         for (var x in mock){
             if (mock[x].userId === userId &&
             mock[x].scheduleId === scheduleId){
                 mock[x].availability = availability;
             }
         }
-        return null;
+        return mock;
     }
 
     // delete a user's availability for a certain schedule
-    function deleteAvailability(userId, scheduleId){
+    function deleteAvailabilityEntry(userId, scheduleId){
         for (var x in mock){
             if (mock[x].userId === userId &&
                 mock[x].scheduleId === scheduleId){
