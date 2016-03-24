@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="player in players">
-                    <td>{{player.firstName}} {{player.lastName}}</td>
+                    <td ng-click="profilePage($index)">{{player.firstName}} {{player.lastName}}</td>
                     <td>{{player.location}}</td>
                     <td>{{player.level}}</td>
                 </tr>

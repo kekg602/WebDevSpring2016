@@ -3,9 +3,11 @@
         .module("TennisSchedulerApp")
         .controller("SearchController", SearchController);
 
-    function SearchController(UserService, $scope){
+    function SearchController(UserService, $scope, $location){
 
-        $scope.search = search;
+        $scope.search = search
+        $scope.profilePage = profilePage;
+
         $scope.error = null;
         $scope.players = null;
 
@@ -40,6 +42,14 @@
             } else {
                 $scope.error = "Sorry, there are no players with that name";
             }
+        }
+
+        // navigate to the profile page of one of the players who
+        // showed up in the search results
+        // index is where in the player array they are located
+        function profilePage(index){
+            $scope.playerId = $scope.players[index]._id;
+            $location.path('/profile/' +  $scope.playerId);
         }
     }
 })();
