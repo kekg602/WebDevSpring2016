@@ -140,7 +140,8 @@
             if ($scope.selectedScheduleIndex != null){
                 schedule.adminId = $scope.user._id;
 
-                var usernames = schedule.players.split(",");
+                var usernames = schedule.players + " ";
+                usernames = usernames.split(",");
                 var newPlayerList = [];
                 for (var u in usernames){
                     if (usernames[u] != ""){
