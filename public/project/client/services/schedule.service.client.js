@@ -10,7 +10,8 @@
             createScheduleForAdmin: createScheduleForAdmin,
             findAllSchedulesForAdmin: findAllSchedulesForAdmin,
             deleteScheduleById: deleteScheduleById,
-            updateScheduleById: updateScheduleById
+            updateScheduleById: updateScheduleById,
+            findSchedulesByUsername: findSchedulesByUsername
         };
         return model;
 
@@ -28,6 +29,10 @@
 
         function updateScheduleById(scheduleId, updatedSchedule){
             return $http.put("/api/project/schedule/" + scheduleId, updatedSchedule);
+        }
+
+        function findSchedulesByUsername(username){
+            return $http.get("/api/project/schedule?username=" + username);
         }
 
     }

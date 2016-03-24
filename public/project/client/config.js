@@ -39,7 +39,8 @@
                 })
             .when("/schedule",
                 {
-                    templateUrl: "views/schedule/schedule.view.html"
+                    templateUrl: "views/schedule/schedule.view.html",
+                    controller: "ScheduleController"
                 })
             .when("/search",
                 {

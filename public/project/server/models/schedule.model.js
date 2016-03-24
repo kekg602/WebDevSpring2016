@@ -37,7 +37,7 @@ module.exports = function() {
         var schedules = [];
         for (var s in mock){
             for (var u in mock[s].players){
-                if (mock[s].players[u].username === username){
+                if (mock[s].players[u] === username){
                     schedules.push(mock[s]);
                 }
             }
@@ -72,7 +72,7 @@ module.exports = function() {
     // find a schedule by its specific id
     function findScheduleById(scheduleId){
         for (var s in mock){
-            if (mock[s]._id === scheduleIe){
+            if (mock[s]._id === scheduleId){
                 return mock[s];
             }
         }
