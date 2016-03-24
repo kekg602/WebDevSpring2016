@@ -32,21 +32,26 @@
                 return;
             }
 
-            UserService.findUserByCredentials(user.username, user.password, findUserByCredentialsCallback);
+            UserService
+                .findUserByCredentials(user.username, user.password)
+                .then(findUserByCredentialsCallback);
         }
 
         function findUserByCredentialsCallback(user) {
-            if (user != null) {
+            if (user.data != null) {
                 $scope.message = "User already exists";
-                return;
+            } else {
+                UserService
+                    .createUser($scope.user)
+                    .then(createUserCallback);
             }
-
-            UserService.createUser($scope.user, createUserCallback);
         }
 
         function createUserCallback(newUser) {
-            $rootScope.currentUser = newUser;
-            $location.url("/profile");
+            if (newUser.data){
+                $rootScope.currentUser = newUser.data;
+                $location.url("/profile");
+            }
         }
 
     }

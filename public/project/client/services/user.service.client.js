@@ -29,19 +29,19 @@
 
         // find all users with a certain name
         function findUserByName(firstName, lastName){
-            return $http.get("api/project/user?firstname=" + firstName + "&lastname=" + lastName);
+            return $http.get("/api/project/user?firstname=" + firstName + "&lastname=" + lastName);
         }
 
         // takes in a user and callback
         // calls back with new user
         function createUser (user) {
-            return $http.post("api/project/user", user);
+            return $http.post("/api/project/user", user);
         }
 
         // takes in a user id and callback
         // calls back with remaining users
         function deleteUserById(userId){
-            return $http.delete("api/project/user/" + userId);
+            return $http.delete("/api/project/user/" + userId);
         }
 
         // takes in user id, user object and callback
