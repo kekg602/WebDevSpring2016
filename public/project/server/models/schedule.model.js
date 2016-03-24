@@ -7,7 +7,8 @@ module.exports = function() {
         findScheduleByAdminId: findScheduleByAdminId,
         findScheduleByUsername: findScheduleByUsername,
         deleteSchedule: deleteSchedule,
-        updateSchedule: updateSchedule
+        updateSchedule: updateSchedule,
+        findScheduleById: findScheduleById
     };
     return api;
 
@@ -68,5 +69,15 @@ module.exports = function() {
         }
         var schedules = findScheduleByCreatorUserId(schedule.userId);
         return schedules;
+    }
+
+    // find a schedule by its specific id
+    function findScheduleById(scheduleId){
+        for (var s in mock){
+            if (mock[s]._id === scheduleIe){
+                return mock[s];
+            }
+        }
+        return null;
     }
 }
