@@ -5,7 +5,7 @@
         .module("TennisSchedulerApp")
         .factory("UserScheduleAvailabilityService", UserScheduleAvailabilityService);
 
-    function UserScheduleAvailabilityService(){
+    function UserScheduleAvailabilityService($http){
         var model = {
             createAvailabilityEntry: createAvailabilityEntry,
             findAvailabilityEntry: findAvailabilityEntry,

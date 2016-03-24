@@ -10,22 +10,24 @@
         // get current user
         $scope.user = $rootScope.currentUser;
 
-        // get forms for current user using service
-        if ($scope.user){
-            ScheduleService.findAllSchedulesForAdmin($scope.user._id, findAllSchedulesForAdminCallback);
-        }
-
-        function findAllSchedulesForAdminCallback(schedules){
-            if (schedules){
-                $scope.schedules = schedules;
-            }
-        }
-
         // set up event handlers
         $scope.addSchedule = addSchedule;
         $scope.updateSchedule = updateSchedule;
         $scope.deleteSchedule = deleteSchedule;
         $scope.selectSchedule = selectSchedule;
+
+        // get forms for current admin using service
+        if ($scope.user){
+            ScheduleService
+                .findAllSchedulesForAdmin($scope.user._id)
+                .then(findAllSchedulesForAdminCallback)
+        }
+
+        function findAllSchedulesForAdminCallback(schedules){
+            if (schedules.data){
+                $scope.schedules = schedules.data;
+            }
+        }
 
         // add a schedule
         function addSchedule(schedule){
@@ -54,15 +56,20 @@
                     return;
                 }
 
-                ScheduleService.createScheduleForAdmin($scope.user._id, schedule, addScheduleCallback);
+                schedule.adminId = $scope.user._id;
+
+                ScheduleService
+                    .createScheduleForAdmin(schedule)
+                    .then(addScheduleCallback);
+
             } else {
                 $scope.error = "Please enter a schedule to add";
             }
         }
 
-        function addScheduleCallback(newSchedule){
-            if (newSchedule) {
-                $scope.schedules.push(newSchedule);
+        function addScheduleCallback(schedules){
+            if (schedules.data) {
+                $scope.schedules = schedules.data;
                 $scope.schedule = {};
                 $scope.message = "Schedule added successfully";
             } else {
@@ -77,34 +84,26 @@
             $scope.message = null;
 
             if ($scope.selectedScheduleIndex != null){
-                ScheduleService.updateScheduleById($scope.schedules[$scope.selectedScheduleIndex]._id, schedule, updatedScheduleCallback);
+                schedule.adminId = $scope.user._id;
+
+                ScheduleService
+                    .updateScheduleById($scope.schedules[$scope.selectedScheduleIndex]._id, schedule)
+                    .then(updatedScheduleCallback);
             } else {
                 $scope.error = "Error updating schedule";
             }
         }
 
-        function updatedScheduleCallback(updatedSchedule){
-            if (updatedSchedule) {
-                $scope.forms[$scope.selectedScheduleIndex] = {
-                    _id: updatedSchedule._id,
-                    date: updatedSchedule.date,
-                    time: updatedSchedule.time,
-                    location: updatedSchedule.location,
-                    players: updatedSchedule.players,
-                    admin_id: updatedSchedule.admin_id
-                };
-
-                // clear schedule
-                $scope.schedule = {};
-                $scope.selectedScheduleIndex = null;
-                $scope.message = "Schedule updated successfully";
-            } else {
-                $scope.error = "Error updating schedule";
-            }
+        function updatedScheduleCallback(schedules){
+           if(schedules.data){
+               $scope.schedules = schedules.data;
+               $scope.message = "Schedule updated successfully";
+           } else {
+               $scope.error = "Error updating schedule";
+           }
         }
 
-        // delete a schedule, since the call callsback with remaining schedules
-        // do another call to get all of the schedules left for users
+        // delete a schedule
         function deleteSchedule(index){
             // show user error and success messages
             $scope.error = null;
@@ -112,18 +111,15 @@
 
             $scope.selectedScheduleIndex = null;
 
-            ScheduleService.deleteScheduleById($scope.schedules[index]._id, deleteScheduleCallback);
+            ScheduleService
+                .deleteScheduleById($scope.schedules[index]._id)
+                .then(deleteScheduleCallback);
         }
 
         function deleteScheduleCallback(remainingSchedules){
-            ScheduleService.findAllSchedulesForAdmin($scope.user._id, function(schedules){
-                if (schedules){
-                    $scope.schedules = schedules;
-                    $scope.message = "Schedule deleted successfuly";
-                } else {
-                    $scope.error = "Error deleting schedule";
-                }
-            });
+            ScheduleService
+                .findAllSchedulesForAdmin($scope.user._id)
+                .then(findAllSchedulesForAdminCallback);
         }
 
         // select a schedule, puts information in first row

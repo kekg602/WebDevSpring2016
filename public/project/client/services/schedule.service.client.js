@@ -5,7 +5,7 @@
         .module("TennisSchedulerApp")
         .factory("ScheduleService", ScheduleService);
 
-    function ScheduleService(){
+    function ScheduleService($http){
         var model = {
             createScheduleForAdmin: createScheduleForAdmin,
             findAllSchedulesForAdmin: findAllSchedulesForAdmin,

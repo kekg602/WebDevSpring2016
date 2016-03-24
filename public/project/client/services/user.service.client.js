@@ -5,7 +5,7 @@
         .module("TennisSchedulerApp")
         .factory("UserService", UserService);
 
-    function UserService($rootScope){
+    function UserService($rootScope, $http){
         var model = {
             createUser: createUser,
             findUserByCredentials: findUserByCredentials,
