@@ -1,7 +1,7 @@
 module.exports = function(app, userScheduleAvailabilityModel){
 
     app.post("/api/project/avail", createAvailabilityEntry);
-    app.get("/api/project/avail", findAvailabilityEntry);
+    app.get("/api/project/avail", findAvailEntry);
     app.put("/api/project/avail/:userId/:scheduleId", updateAvailabilityEntry);
     app.delete("/api/project/avail/:userId/:scheduleId", deleteAvailabilityEntry);
 
@@ -11,7 +11,7 @@ module.exports = function(app, userScheduleAvailabilityModel){
         res.json(entries);
     }
 
-    function findAvailabilityEntry(req, res){
+    function findAvailEntry(req, res){
         var userId = req.query.userId;
         var scheduleId = req.query.scheduleId;
         var entry = userScheduleAvailabilityModel.findAvailabilityEntry(userId, scheduleId);

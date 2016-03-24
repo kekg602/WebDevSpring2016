@@ -22,21 +22,22 @@ module.exports = function() {
         for (var x in mock){
             if (mock[x].userId === userId &&
                 mock[x].scheduleId === scheduleId){
-                return mock[x].availability;
+                return mock[x];
             }
         }
         return null;
     }
 
-    // update a user's availability for a certain schedule
+    // update a user's availability for a certain schedule entry
     function updateAvailabilityEntry(userId, scheduleId, availability){
         for (var x in mock){
             if (mock[x].userId === userId &&
             mock[x].scheduleId === scheduleId){
                 mock[x].availability = availability;
+                return mock[x];
             }
         }
-        return mock;
+        return null;
     }
 
     // delete a user's availability for a certain schedule

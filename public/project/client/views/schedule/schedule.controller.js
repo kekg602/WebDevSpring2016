@@ -5,9 +5,14 @@
         .module("TennisSchedulerApp")
         .controller("ScheduleController", ScheduleController);
 
-    function ScheduleController($scope, $rootScope, ScheduleService, UserScheduleAvailabilityService){
+    function ScheduleController($rootScope, $scope, ScheduleService, UserScheduleAvailabilityService){
+
+        $scope.updateAvailability = updateAvailability;
+        $scope.selectSchedule = selectSchedule;
+        $scope.getAvailability = getAvailability;
 
         if ($rootScope.currentUser){
+            $scope.userId = $rootScope.currentUser._id;
             $scope.username = $rootScope.currentUser.username;
         }
 
@@ -22,6 +27,7 @@
             if (schedules.data){
                 $scope.schedules = schedules.data;
                 formatData();
+                $scope.getAvailability();
             }
         }
 
@@ -60,5 +66,57 @@
 
             }
         }
+
+        function getAvailability(){
+            for (var s in $scope.schedules){
+                UserScheduleAvailabilityService
+                    .findAvailabilityEntry($scope.userId, $scope.schedules[s]._id)
+                    .then(setScheduleAvailability);
+            }
+        }
+
+        function setScheduleAvailability(response){
+            if (response.data){
+                for (var s in $scope.schedules){
+                    if ($scope.schedules[s]._id === response.data.scheduleId){
+                        $scope.schedules[s].availability = response.data.availability;
+                    }
+                }
+            }
+        }
+
+        function updateAvailability(index){
+            var avail = $scope.availability;
+            var scheduleId = $scope.schedules[index]._id;
+            UserScheduleAvailabilityService
+                .updateAvailabilityEntry($scope.userId, scheduleId, avail)
+                .then(updateAvailabilityResponse);
+        }
+
+        function updateAvailabilityResponse(update){
+            if (update.data){
+                $scope.message = "Availability successfully updated";
+            } else {
+                $scope.error = "Error updating availability";
+            }
+        }
+
+        // select a schedule, puts information in first row
+        // when update clicked, update this schedule
+        function selectSchedule(index){
+            // show user error and success messages
+            $scope.error = null;
+            $scope.message = null;
+
+            $scope.selectedScheduleIndex = index;
+
+            $scope.schedule = {
+                date : $scope.schedules[index].formattedDate,
+                time : $scope.schedules[index].formattedTime,
+                availability: $scope.schedules[index].availability
+            };
+
+        }
+
     }
 })();

@@ -19,7 +19,7 @@
         }
 
         function findAvailabilityEntry(userId, scheduleId){
-            return $http.get("/api/project/avail?userId=" + userId + "&scheduleId" + scheduleId);
+            return $http.get("/api/project/avail?userId=" + userId + "&scheduleId=" + scheduleId);
         }
 
         function deleteAvailabilityEntry(userId, scheduleId){
