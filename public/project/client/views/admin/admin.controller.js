@@ -10,6 +10,9 @@
         // get current user
         $scope.user = $rootScope.currentUser;
 
+        // keep the unformatted data stored
+        $scope.unformattedSchedules = [];
+
         // set up event handlers
         $scope.addSchedule = addSchedule;
         $scope.updateSchedule = updateSchedule;
@@ -26,6 +29,55 @@
         function findAllSchedulesForAdminCallback(schedules){
             if (schedules.data){
                 $scope.schedules = schedules.data;
+
+                formatData();
+            }
+        }
+
+        // format the data so that it is readable in the table
+        function formatData(){
+            var date;
+            var time;
+            var hours;
+            var minutes;
+            var timeOfDay;
+            var players;
+            for (var s in $scope.schedules){
+                date = new Date($scope.schedules[s].date);
+                $scope.schedules[s].formattedDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+
+                time = new Date($scope.schedules[s].time);
+                hours = time.getHours();
+
+                if (hours > 11){
+                    timeOfDay = "PM";
+                } else {
+                    timeOfDay = "AM";
+                }
+
+                if (hours === 0){
+                    hours = 12;
+                }
+
+                minutes = time.getMinutes();
+
+                if (minutes < 10){
+                    minutes = "0" + minutes;
+                }
+
+                $scope.schedules[s].formattedTime = hours + ":" + minutes + timeOfDay;
+
+
+                for (var p in $scope.schedules[s].players){
+                    if (players){
+                        players = players + "," + $scope.schedules[s].players[p];
+                    } else {
+                        players =  $scope.schedules[s].players[p];
+                    }
+                }
+                $scope.schedules[s].formattedPlayers = players;
+
+                players = null;
             }
         }
 
@@ -72,6 +124,8 @@
                 $scope.schedules = schedules.data;
                 $scope.schedule = {};
                 $scope.message = "Schedule added successfully";
+                $scope.formattedSchedules = schedules.data;
+                formatData();
             } else {
                 $scope.message = "Error adding schedule";
             }
@@ -86,6 +140,16 @@
             if ($scope.selectedScheduleIndex != null){
                 schedule.adminId = $scope.user._id;
 
+                var usernames = schedule.players.split(",");
+                var newPlayerList = [];
+                for (var u in usernames){
+                    if (usernames[u] != ""){
+                        newPlayerList.push(usernames[u]);
+                    }
+                }
+
+                schedule.players = newPlayerList;
+
                 ScheduleService
                     .updateScheduleById($scope.schedules[$scope.selectedScheduleIndex]._id, schedule)
                     .then(updatedScheduleCallback);
@@ -99,6 +163,8 @@
                $scope.schedules = schedules.data;
                $scope.message = "Schedule updated successfully";
                $scope.schedule = {};
+               $scope.formattedSchedules = schedules.data;
+               formatData();
            } else {
                $scope.error = "Error updating schedule";
            }
