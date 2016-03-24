@@ -6,6 +6,7 @@ module.exports = function(app, userModel){
     app.get("/api/project/user/:id", findUserById);
     app.put("/api/project/user/:id", updateUser);
     app.delete("/api/project/user/:id", deleteUser);
+    app.get("/api/project/user/username/:username", findUserByUsername);
 
     // create user and return all users
     function createUser(req, res){
@@ -27,9 +28,6 @@ module.exports = function(app, userModel){
 
             var user = userModel.findUserByCredentials(credentials);
             res.json(user);
-        } else if (username != null && password == null) {
-            var user = userModel.findUserByUsername(username);
-            res.json(user);
         } else if (firstname && lastname) {
             var user = userModel.findUserByName(firstname, lastname);
             res.json(user);
@@ -37,6 +35,12 @@ module.exports = function(app, userModel){
             var users = userModel.findAllUsers();
             res.json(users);
         }
+    }
+
+    function findUserByUsername(req, res){
+        var username = req.params.username;
+        var user = userModel.findUserByUsername(username);
+        res.json(user);
     }
 
     // find a user with a specific id

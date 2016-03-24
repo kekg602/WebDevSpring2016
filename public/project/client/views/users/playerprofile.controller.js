@@ -5,15 +5,15 @@
         .module("TennisSchedulerApp")
         .controller("PlayerProfileController", PlayerProfileController);
 
-    function PlayerProfileController($scope, $rootScope, UserService, ScheduleService, $routeParams) {
+    function PlayerProfileController($scope, $location, UserService, ScheduleService, $routeParams) {
 
-        $scope.playerId = $routeParams.playerId;
-        //$scope.goToProfile = goToProfile;
+        $scope.username = $routeParams.username;
+        $scope.profilePage = profilePage;
 
         // get this players information and schedule
-        if ($scope.playerId){
+        if ($scope.username){
             UserService
-                .findUserById($scope.playerId)
+                .findUserByUsername($scope.username)
                 .then(userFoundResponse);
         }
 
@@ -60,11 +60,10 @@
             }
         }
 
-        /*
+        // after clicking on a user's name, go to their profile
         function profilePage(index){
             $scope.goToPlayerUsername = $scope.playsWith[index];
-            $location.path('/profile/' +  $scope.goToPlayerId);
-            console.log($scope.playerId);
-        }*/
+            $location.path('/profile/' +  $scope.goToPlayerUsername);
+        }
     }
 })();

@@ -14,7 +14,8 @@
             deleteUserById: deleteUserById,
             findUserByName: findUserByName,
             searchUserByName: searchUserByName,
-            findUserById: findUserById
+            findUserById: findUserById,
+            findUserByUsername: findUserByUsername
         };
         return model;
 
@@ -59,6 +60,10 @@
 
         function searchUserByName(firstName, lastName){
             return $http.get("/api/project/user/search?firstname=" + firstName + "&lastname=" + lastName);
+        }
+
+        function findUserByUsername(username){
+            return $http.get("/api/project/user/username/" + username);
         }
 
     }

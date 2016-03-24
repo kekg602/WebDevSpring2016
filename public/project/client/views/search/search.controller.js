@@ -48,9 +48,9 @@
         // showed up in the search results
         // index is where in the player array they are located
         function profilePage(index){
-            $scope.playerId = $scope.players[index]._id;
-            $location.path('/profile/' +  $scope.playerId);
-            console.log($scope.playerId);
+            $scope.playerUsername = $scope.players[index].username;
+            $location.path('/profile/' +  $scope.playerUsername);
+            console.log($scope.playerUsername);
         }
     }
 })();
