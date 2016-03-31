@@ -1,7 +1,7 @@
 #!/bin/env node
 var express = require('express');
 var app = express();
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var db = mongoose.connect('mongodb://localhost/test');
 var bodyParser = require('body-parser');
 var multer = require('multer');
@@ -11,11 +11,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
-require("./app/app.js")(app, db);
-
-require("./public/assignment/server/app.js")(app);
+require("./public/assignment/server/app.js")(app, db);
 require("./public/assignment/server/models/form.model.js")(app);
-require("./public/assignment/server/models/user.model.js")(app);
+require("./public/assignment/server/models/users/user.model.js")(app);
 require("./public/assignment/server/services/user.service.server.js")(app);
 require("./public/assignment/server/services/form.service.server.js")(app);
 require("./public/assignment/server/services/field.service.server.js")(app);
