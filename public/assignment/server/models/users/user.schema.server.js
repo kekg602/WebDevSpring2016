@@ -10,4 +10,4 @@ module.exports = function (mongoose) {
     }, {collection: "user"});
 
     return UserSchema;
-}
+};

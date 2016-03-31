@@ -1,6 +1,4 @@
-var mongoose = require("mongoose");
-
-module.exports = function () {
+module.exports = function (mongoose) {
 
     var FieldSchema = mongoose.Schema({
         label: String,
@@ -11,4 +9,4 @@ module.exports = function () {
     }, {collection: "field"});
 
     return FieldSchema;
-}
+};
