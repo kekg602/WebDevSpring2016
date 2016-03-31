@@ -24,11 +24,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
 require("./public/assignment/server/app.js")(app, db, mongoose);
-require("./public/assignment/server/models/forms/form.model.js")(app);
-require("./public/assignment/server/models/users/user.model.js")(app);
-require("./public/assignment/server/services/user.service.server.js")(app);
-require("./public/assignment/server/services/form.service.server.js")(app);
-require("./public/assignment/server/services/field.service.server.js")(app);
+//require("./public/assignment/server/models/forms/form.model.js")(app);
+//require("./public/assignment/server/models/users/user.model.js")(app);
+//require("./public/assignment/server/services/user.service.server.js")(app);
+//require("./public/assignment/server/services/form.service.server.js")(app);
+//require("./public/assignment/server/services/field.service.server.js")(app);
 
 require("./public/project/server/app.js")(app);
 require("./public/project/server/models/schedule.model.js")(app);

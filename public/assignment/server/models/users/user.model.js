@@ -1,9 +1,13 @@
 var mock = require("./user.mock.json");
+var q = require("q");
 var uuid = require('node-uuid');
 
 module.exports = function(db, mongoose){
     // load user schema
     var UserSchema = require("./user.schema.server.js")(mongoose);
+
+    // create mongoose model
+    var UserModel = mongoose.model('User', UserSchema);
 
     var api = {
         createUser: createUser,
@@ -18,9 +22,23 @@ module.exports = function(db, mongoose){
 
     // create a new user from information taken in, return all
     function createUser(user){
-        user._id = uuid.v1();
-        mock.push(user);
-        return user;
+        var deferred = q.defer();
+
+        // insert a new user into the database
+        UserModel.create(user, function(err, doc){
+            console.log(doc);
+
+            if (err){
+                // reject promise
+                deferred.reject(err);
+            } else {
+                // resolve promise
+                deferred.resolve(doc);
+            }
+
+        });
+
+        return deferred.promise;
     }
 
     // get all of the users
