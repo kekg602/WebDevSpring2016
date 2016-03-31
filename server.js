@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
-require("./public/assignment/server/app.js")(app, db);
+require("./public/assignment/server/app.js")(app, db, mongoose);
 require("./public/assignment/server/models/forms/form.model.js")(app);
 require("./public/assignment/server/models/users/user.model.js")(app);
 require("./public/assignment/server/services/user.service.server.js")(app);
