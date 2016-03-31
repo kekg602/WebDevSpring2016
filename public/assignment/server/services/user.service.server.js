@@ -20,18 +20,27 @@ module.exports = function(app, userModel){
             );
     }
 
-    // get and return all users
+    // get and return a user based on what parameters exist
     function findUsers(req, res){
         var username = req.query.username;
         var password = req.query.password;
         if (username && password){
+
             var credentials = {
               username: username,
               password: password
             };
-            
-            var user = userModel.findUserByCredentials(credentials);
-            res.json(user);
+
+            userModel.findUserByCredentials(credentials)
+                .then(
+                    function (doc){
+                        res.json(user);
+                    },
+                    function (err){
+                        res.status(400).send(err);
+                    }
+                );
+
         } else if (password == null){
             if (username){
                 var user = userModel.findUserByUsername(username);

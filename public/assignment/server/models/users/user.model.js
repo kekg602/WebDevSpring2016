@@ -75,13 +75,24 @@ module.exports = function(db, mongoose){
 
     // find user based on their username and password
     function findUserByCredentials(credentials){
-        for (var u in mock){
-            if (mock[u].username === credentials.username &&
-                mock[u].password === credentials.password){
-                return mock[u];
-            }
-        }
-        return null;
+        var deferred = q.defer();
+
+        UserModel.findOne(
+            // first argument is predicate
+            { username: credentials.username,
+              password: credentials.password },
+
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+
+                return null;
+            });
+
+        return deferred.promise;
     }
 
     // update the given user
