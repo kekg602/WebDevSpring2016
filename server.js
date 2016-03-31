@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 
-var connectionString = 'mongodb://127.0.0.1:27017/test'
+var connectionString = 'mongodb://127.0.0.1:27017/test';
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
