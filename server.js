@@ -1,8 +1,8 @@
 #!/bin/env node
 var express = require('express');
 var app = express();
-var mongoose = require("mongoose")
-var db = mongoose.connect('mongodb://localhost/test')
+var mongoose = require("mongoose");
+var db = mongoose.connect('mongodb://localhost/test');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 
