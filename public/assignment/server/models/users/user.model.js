@@ -2,6 +2,9 @@ var mock = require("./user.mock.json");
 var uuid = require('node-uuid');
 
 module.exports = function(db, mongoose){
+    // load user schema
+    var UserSchema = require("./user.schema.server.js")(mongoose);
+
     var api = {
         createUser: createUser,
         findAllUsers: findAllUsers,
