@@ -48,12 +48,19 @@ module.exports = function(db, mongoose){
 
     // takes in id and finds user with that id
     function findUserById(id){
-        for (var u in mock) {
-            if (mock[u]._id === id) {
-                return mock[u];
+        var deferred = q.defer();
+
+        UserModel.findById(id, function(err, doc){
+            if (err){
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
             }
-        }
-        return null;
+
+            return null;
+        });
+
+        return deferred.promise;
     }
 
     // find a user by their username

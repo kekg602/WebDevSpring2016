@@ -6,11 +6,18 @@ module.exports = function(app, userModel){
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
-    // create user and return all users
+    // create user and return the new user
     function createUser(req, res){
         var user = req.body;
-        var newUser = userModel.createUser(user);
-        res.json(newUser);
+        userModel.createUser(user)
+            .then(
+                function (doc){
+                    res.json(newUser);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // get and return all users
@@ -39,8 +46,16 @@ module.exports = function(app, userModel){
     // find a user with a specific id
     function findUserById(req, res){
         var id = req.params.id;
-        var user = userModel.findUserById(id);
-        res.json(user)
+
+        userModel.findUserById(id)
+            .then(
+                function (doc){
+                    res.json(user);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // update a user
