@@ -126,7 +126,7 @@ module.exports = function(db, mongoose) {
     function findFormsByUserId(userId){
         var deferred = q.defer();
 
-        FormModel.findOne(
+        FormModel.find(
             { userId: userId },
 
             function(err, doc){

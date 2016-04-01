@@ -60,9 +60,12 @@
 
         function addFormResponse(newForm){
             if (newForm.data) {
-                $scope.forms = newForm.data;
                 $scope.form = {};
                 $scope.message = "Form added successfully";
+
+                FormService
+                    .findAllFormsForUser($scope.user._id)
+                    .then(findAllFormsForUserResponse);
             } else {
                 $scope.message = "Error adding form";
             }
@@ -90,12 +93,14 @@
 
         function updatedFormResponse(updatedForm){
             if (updatedForm.data) {
-                $scope.forms = updatedForm.data;
-
                 // clear form
                 $scope.form = {};
                 $scope.selectedFormIndex = null;
                 $scope.message = "Form updated successfully";
+
+                FormService
+                    .findAllFormsForUser($scope.user._id)
+                    .then(findAllFormsForUserResponse);
             } else {
                 $scope.error = "Error updating form";
             }
