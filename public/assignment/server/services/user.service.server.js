@@ -43,11 +43,25 @@ module.exports = function(app, userModel){
 
         } else if (password == null){
             if (username){
-                var user = userModel.findUserByUsername(username);
-                res.json(user);
+                userModel.findUserByUsername(username)
+                    .then(
+                        function (doc){
+                            res.json(user);
+                        },
+                        function (err){
+                            res.status(400).send(err);
+                        }
+                    );
             } else {
-                var users = userModel.findAllUsers();
-                res.json(users);
+                userModel.findAllUsers()
+                    .then(
+                        function (doc){
+                            res.json(user);
+                        },
+                        function (err){
+                            res.status(400).send(err);
+                        }
+                    );
             }
         }
     }
@@ -67,18 +81,33 @@ module.exports = function(app, userModel){
             );
     }
 
-    // update a user
+    // update a user and return updated user
     function updateUser(req, res){
         var updatedUser = req.body;
         var id = req.params.id;
-        var user = userModel.updateUser(id, updatedUser);
-        res.json(user);
+
+        userModel.updateUser(id, updatedUser)
+            .then(
+                function (doc){
+                    res.send(200);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // delete a user
     function deleteUser(req, res){
         var id = req.params.id;
-        var users = userModel.deleteUser(id);
-        res.json(users);
+        userModel.deleteUser(id)
+            .then(
+                function (doc){
+                    res.send(200);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 }
