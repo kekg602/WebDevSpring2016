@@ -9,6 +9,35 @@
         $scope.currentUser =  $rootScope.currentUser;
         $scope.updateUser = updateUser;
 
+        // format email and phone numbers
+        if ($scope.currentUser != null){
+            var emails = $scope.currentUser.emails;
+            var emailString = "";
+            for (var e in emails){
+                if (emailString === ""){
+                    emailString = emailString.concat(emails[e]);
+                } else {
+                    emailString = emailString.concat(", ");
+                    emailString = emailString.concat(emails[e]);
+                }
+            }
+
+            $scope.currentUser.email = emailString;
+
+            var phones = $scope.currentUser.phones;
+            var phoneString = "";
+            for (var p in phones){
+                if (phoneString === ""){
+                    phoneString = phoneString.concat(phones[p]);
+                } else {
+                    phoneString = phoneString.concat(", ");
+                    phoneString = phoneString.concat(phones[p]);
+                }
+            }
+
+            $scope.currentUser.phone = phoneString;
+        }
+
         function updateUser(user){
             $scope.error = null;
             $scope.message = null;
@@ -33,14 +62,13 @@
                 $scope.error = "Please provide your last name";
                 return;
             }
-            if (!user.email) {
-                $scope.error = "Please provide an email";
-                return;
-            }
 
             var userId = $scope.currentUser._id;
-            var emails = user.emails;
-            user.emails = emails.push(user.email);
+            var emails = $scope.currentUser.email.split(",");
+            user.emails = emails;
+
+            var phones = $scope.currentUser.phone.split(",");
+            user.phones = phones;
 
             UserService
                 .updateUser(userId, user)
