@@ -80,7 +80,7 @@
             if ($scope.selectedFormIndex != null){
                 // update the form using service
                 var id = $scope.forms[$scope.selectedFormIndex]._id;
-                //form._id = $scope.forms[$scope.selectedFormIndex]._id;
+                form._id = $scope.forms[$scope.selectedFormIndex]._id;
                 form.userId = $scope.forms[$scope.selectedFormIndex].userId;
                 console.log("Form id " + id);
                 FormService
