@@ -9,22 +9,43 @@ module.exports = function(app, formModel){
     // get forms belonging to a certain user
     function findFormsByUserId(req, res){
         var userId = req.params.userId;
-        var forms = formModel.findFormsByUserId(userId);
-        res.json(forms);
+        formModel.findFormsByUserId(userId)
+            .then(
+                function (doc){
+                    res.json(doc);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // find form by id
     function findFormById(req, res){
         var id = req.params.formId;
-        var form = formModel.findFormById(id);
-        res.json(form);
+        formModel.findFormById(id)
+            .then(
+                function (doc){
+                    res.json(doc);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // delete a form
     function deleteForm(req, res){
         var id = req.params.formId;
-        var forms = formModel.deleteForm(id);
-        res.json(forms);
+        formModel.deleteForm(id)
+            .then(
+                function (doc){
+                    res.send(200);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // create a form, specific user id
@@ -46,8 +67,15 @@ module.exports = function(app, formModel){
     function updateForm(req, res){
         var form = req.body;
         var formId = req.params.formId;
-        var forms = formModel.updateForm(formId, form);
-        res.json(forms);
+        formModel.updateForm(formId, form)
+            .then(
+                function (doc){
+                    res.send(200);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
 }

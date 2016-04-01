@@ -67,61 +67,104 @@ module.exports = function(db, mongoose) {
 
     // return all forms
     function findAllForms(){
-        return mock;
+        var deferred = q.defer();
+
+        FormModel.find(
+            function (err, forms){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(forms);
+                }
+
+            }
+        );
+
+        return deferred.promise;
     }
 
     // find a form by specific id
     function findFormById(formId){
-        for (var f in mock) {
-            if (mock[f]._id === formId) {
-                return mock[f];
+        var deferred = q.defer();
+
+        FormModel.findById(id, function(err, doc){
+            if (err){
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
             }
-        }
-        return null;
+
+            return null;
+        });
+
+        return deferred.promise;
     }
 
     // find a form by specific title
     function findFormByTitle(formTitle){
-        for (var f in mock) {
-            if (mock[f].title === formTitle) {
-                return mock[f];
+        var deferred = q.defer();
+
+        FormModel.findOne(
+            {title: formTitle},
+
+            function(err, doc){
+                if (err){
+                    deferred.reject(err);
+                } else if (doc){
+                    deferred.resolve(doc);
+                }
+
+                return null;
             }
-        }
-        return null;
+
+        );
+
+        return deferred.promise;
     }
 
     // find forms belonging to a certain user
     function findFormsByUserId(userId){
-        var forms = [];
-        for (var f in mock){
-            if (mock[f].userId === userId){
-                forms.push(mock[f]);
+        var deferred = q.defer();
+
+        FormModel.findOne(
+            { userId: userId },
+
+            function(err, doc){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+                return null;
             }
-        }
-        return forms;
+        );
+
+        return deferred.promise;
     }
 
     // update a form
     function updateForm(formId, updatedForm){
-        for (var f in mock) {
-            if (mock[f]._id === formId) {
-                mock[f].title = updatedForm.title;
-                mock[f].userId = updatedForm.userId;
-                mock[f].fields = updatedForm.fields;
+        var deferred = q.defer();
+
+        FormModel.update(
+            {_id: formId},
+            {$set: updatedForm},
+
+            function(err, doc){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
             }
-        }
-        var forms = findFormsByUserId(updatedForm.userId);
-        return forms;
+        );
+
+        return deferred.promise;
     }
 
     // remove a form
     function deleteForm(formId){
-        for (var f in mock){
-            if (mock[f]._id === formId){
-                mock.splice(f, 1);
-            }
-        }
-        return mock;
+        return FormModel.remove().where("_id").equals(formId);
     }
 
     // return the fields in a given form
