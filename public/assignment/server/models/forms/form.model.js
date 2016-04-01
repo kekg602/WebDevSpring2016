@@ -14,9 +14,14 @@ module.exports = function(db, mongoose) {
         findFormByTitle: findFormByTitle,
         findFormsByUserId: findFormsByUserId,
         updateForm: updateForm,
-        deleteForm: deleteForm
+        deleteForm: deleteForm,
+        getMongooseModel: getMongooseModel
     };
     return api;
+
+    function getMongooseModel(){
+        return FormModel;
+    }
 
     // make a new form and add it, return collection
     function createForm(form){

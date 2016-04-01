@@ -1,4 +1,4 @@
-module.exports = function(app, formModel, ds, mongoose){
+module.exports = function(app, formModel, db, mongoose){
 
     app.get("/api/assignment/form/:formId/field", findFieldByFormId);
     app.get("/api/assignment/form/:formId/field/:fieldId", findFieldByFormIdAndFieldId);
