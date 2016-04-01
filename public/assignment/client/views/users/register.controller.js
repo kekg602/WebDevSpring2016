@@ -32,6 +32,8 @@
                 return;
             }
 
+            user.emails = [user.email];
+
             UserService
                 .findUserByCredentials(user.username, user.password)
                 .then(findUserByCred);

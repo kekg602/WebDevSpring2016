@@ -39,6 +39,8 @@
             }
 
             var userId = $scope.currentUser._id;
+            var emails = user.emails;
+            user.emails = emails.push(user.email);
 
             UserService
                 .updateUser(userId, user)
@@ -49,8 +51,6 @@
             if (response.data){
                 console.log("User updated");
                 $scope.message = "User updated successfully";
-                $scope.currentUser = response.data;
-                $rootScope.currentUser = response.data;
             } else {
                 console.log("update user error");
                 $scope.error = "Unable to update the user";
