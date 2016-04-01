@@ -14,7 +14,7 @@ module.exports = function(app, formModel, db, mongoose){
         fieldModel.findFieldByFormId(formId)
             .then(
                 function(doc){
-                    res.json(doc);
+                    res.json(doc.fields);
                 },
                 function(err){
                     res.status(400).send(err);

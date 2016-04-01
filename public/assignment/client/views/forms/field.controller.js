@@ -31,12 +31,15 @@
 
         function retrievedForm(response){
             if (response.data){
+                console.log(response.data);
                 $scope.title = response.data.title;
             }
         }
 
         function retrievedFields(response){
             if (response.data){
+                console.log(response.data);
+
                 $scope.fields = response.data;
                 tmpList = response.data;
                 $scope.list = tmpList;
@@ -78,6 +81,17 @@
 
             $scope.fields.push(field);
 
+            FieldService
+                .createFieldForForm($scope.formId, field)
+                .then(createdFieldResponse);
+        }
+
+        function createdFieldResponse(response){
+            if (response.data){
+
+            } else {
+
+            }
         }
 
         function removeField(index){
