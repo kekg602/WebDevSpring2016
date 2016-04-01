@@ -8,6 +8,8 @@
     function FieldController(FieldService, FormService, $scope, $routeParams, $uibModal) {
 
         $scope.formId = $routeParams.formId;
+        $scope.error = "";
+        $scope.message = "";
 
         // list of fields for sortable purposes
         var tmpList = [];
@@ -31,15 +33,12 @@
 
         function retrievedForm(response){
             if (response.data){
-                console.log(response.data);
                 $scope.title = response.data.title;
             }
         }
 
         function retrievedFields(response){
             if (response.data){
-                console.log(response.data);
-
                 $scope.fields = response.data;
                 tmpList = response.data;
                 $scope.list = tmpList;
@@ -79,7 +78,7 @@
                 $scope.fields = [];
             }
 
-            $scope.fields.push(field);
+            //$scope.fields.push(field);
 
             FieldService
                 .createFieldForForm($scope.formId, field)
@@ -87,15 +86,19 @@
         }
 
         function createdFieldResponse(response){
-            if (response.data){
-
-            } else {
-
+            if (response.data) {
+                FieldService
+                    .getFieldsForForm($scope.formId)
+                    .then(retrievedFields);
             }
         }
 
         function removeField(index){
+            console.log($scope.fields[index]);
+
+            console.log(index);
             var fieldId = $scope.fields[index]._id;
+            console.log(fieldId);
             FieldService
                 .deleteFieldFromForm($scope.formId, fieldId)
                 .then(showAllFields);
@@ -103,7 +106,7 @@
 
         function showAllFields(response){
             if (response.data){
-                $scope.fields = response.data;
+                console.log(response.data);
             } else {
                 // TODO - show an error
             }

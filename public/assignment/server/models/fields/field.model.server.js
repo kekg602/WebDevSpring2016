@@ -1,3 +1,5 @@
+var uuid = require('node-uuid');
+
 module.exports = function(db, mongoose, formModel){
 
     var Form = formModel.getMongooseModel();
@@ -44,6 +46,7 @@ module.exports = function(db, mongoose, formModel){
         return Form.findById(formId)
             .then(
                 function(form) {
+                    field._id = uuid.v1();
                     form.fields.push(field);
                     return form.save();
                 }
