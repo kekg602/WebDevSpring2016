@@ -125,6 +125,9 @@
             });
 
             modalInstance.result.then(function (updatedField) {
+
+                delete updatedField._id;
+
                 FieldService
                     .updateField($scope.formId, $scope.fields[index]._id, updatedField)
                     .then(showAllFields);
