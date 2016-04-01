@@ -46,7 +46,7 @@ module.exports = function(app, userModel){
                 userModel.findUserByUsername(username)
                     .then(
                         function (doc){
-                            res.json(user);
+                            res.json(doc);
                         },
                         function (err){
                             res.status(400).send(err);
@@ -56,7 +56,7 @@ module.exports = function(app, userModel){
                 userModel.findAllUsers()
                     .then(
                         function (doc){
-                            res.json(user);
+                            res.json(doc);
                         },
                         function (err){
                             res.status(400).send(err);
@@ -73,7 +73,7 @@ module.exports = function(app, userModel){
         userModel.findUserById(id)
             .then(
                 function (doc){
-                    res.json(user);
+                    res.json(doc);
                 },
                 function (err){
                     res.status(400).send(err);
