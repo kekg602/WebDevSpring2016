@@ -41,7 +41,20 @@ module.exports = function(db, mongoose){
 
     // get all of the users
     function findAllUsers(){
-        return UserModel;
+        var deferred = q.defer();
+
+        UserModel.find(
+            function (err, users){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(users);
+                }
+
+            }
+        );
+
+        return deferred.promise;
     }
 
     // takes in id and finds user with that id
@@ -107,7 +120,9 @@ module.exports = function(db, mongoose){
     function updateUser(userId, updatedUser){
         var deferred = q.defer();
 
-        UserModel.update({_id: userId},
+        UserModel.update(
+            {_id: userId},
+            {$set: updatedUser},
 
             function(err, doc){
                 if (err){
