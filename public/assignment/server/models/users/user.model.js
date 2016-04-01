@@ -1,6 +1,4 @@
-var mock = require("./user.mock.json");
 var q = require("q");
-var uuid = require('node-uuid');
 
 module.exports = function(db, mongoose){
     // load user schema
@@ -43,7 +41,7 @@ module.exports = function(db, mongoose){
 
     // get all of the users
     function findAllUsers(){
-        return mock;
+        return UserModel;
     }
 
     // takes in id and finds user with that id
@@ -65,12 +63,22 @@ module.exports = function(db, mongoose){
 
     // find a user by their username
     function findUserByUsername(username){
-        for (var u in mock) {
-            if (mock[u].username === username) {
-                return mock[u];
+        var deferred = q.defer();
+
+        UserModel.findOne(
+            { username: username },
+
+            function(err, doc){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+                return null;
             }
-        }
-        return null;
+        );
+
+        return deferred.promise;
     }
 
     // find user based on their username and password
@@ -97,27 +105,25 @@ module.exports = function(db, mongoose){
 
     // update the given user
     function updateUser(userId, updatedUser){
-        for (var u in mock) {
-            if (mock[u]._id === userId) {
-                mock[u].firstName = updatedUser.firstName;
-                mock[u].lastName = updatedUser.lastName;
-                mock[u].username = updatedUser.username;
-                mock[u].password = updatedUser.password;
-                mock[u].email = updatedUser.email;
-                return mock[u];
+        var deferred = q.defer();
+
+        UserModel.update({_id: userId},
+
+            function(err, doc){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
             }
-        }
-        return null;
+        );
+
+        return deferred.promise;
     }
 
     // delete a user
     function deleteUser(userId){
-        for (var u in mock){
-            if (mock[u]._id === userId){
-                mock.splice(u, 1);
-            }
-        }
-        return mock;
+        return UserModel.remove().where("_id").equals(userId);
     }
     
 }
