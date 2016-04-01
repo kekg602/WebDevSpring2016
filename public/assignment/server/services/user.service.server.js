@@ -12,7 +12,7 @@ module.exports = function(app, userModel){
         userModel.createUser(user)
             .then(
                 function (doc){
-                    res.json(newUser);
+                    res.json(doc);
                 },
                 function (err){
                     res.status(400).send(err);
@@ -34,7 +34,7 @@ module.exports = function(app, userModel){
             userModel.findUserByCredentials(credentials)
                 .then(
                     function (doc){
-                        res.json(user);
+                        res.json(doc);
                     },
                     function (err){
                         res.status(400).send(err);
