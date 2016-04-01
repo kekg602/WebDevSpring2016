@@ -1,9 +1,12 @@
 var mock = require("./form.mock.json");
 var uuid = require('node-uuid');
+var q = require("q");
 
 module.exports = function(db, mongoose) {
 
     var FormSchema = require("./form.schema.server.js")(mongoose);
+
+    var FormModel = mongoose.model('Form', FormSchema);
 
     var api = {
         createForm: createForm,
@@ -22,17 +25,44 @@ module.exports = function(db, mongoose) {
 
     // make a new form and add it, return collection
     function createForm(form){
-        form._id = uuid.v1();
-        mock.push(form);
-        return mock;
+        var deferred = q.defer();
+
+        // insert a new form into the database
+        FormModel.create(form, function(err, doc){
+            console.log(doc);
+
+            if (err){
+                // reject promise
+                deferred.reject(err);
+            } else {
+                // resolve promise
+                deferred.resolve(doc);
+            }
+
+        });
+
+        return deferred.promise;
     }
 
     function createFormWithUserId(userId, form){
-        form._id = uuid.v1();
+        var deferred = q.defer();
+
         form.userId = userId;
-        mock.push(form);
-        var forms = findFormsByUserId(userId);
-        return forms;
+
+        FormModel.create(form, function(err, doc){
+            console.log(doc);
+
+            if (err){
+                // reject promise
+                deferred.reject(err);
+            } else {
+                // resolve promise
+                deferred.resolve(doc);
+            }
+
+        });
+
+        return deferred.promise;
     }
 
     // return all forms
