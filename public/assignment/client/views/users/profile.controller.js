@@ -70,9 +70,6 @@
             var phones = $scope.currentUser.phone.split(",");
             user.phones = phones;
 
-            delete user._id;
-            console.log(user);
-
             UserService
                 .updateUser(userId, user)
                 .then(updateUserCallback);
