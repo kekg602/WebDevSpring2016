@@ -60,7 +60,7 @@ module.exports = function(db, mongoose, formModel){
                     updatedField.label = field.label;
                     updatedField.type = field.type;
 
-                    if (updatedField.placeholder != null){
+                    if (updatedField.placeholder){
                        updatedField.placeholder = field.placeholder;
                     } else {
                         updatedField.options = field.options;
