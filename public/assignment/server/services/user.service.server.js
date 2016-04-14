@@ -69,11 +69,27 @@ module.exports = function(app, userModel){
         userModel
             .findUserByUsername(user.username)
             .then(
-                function(user){
-                    if(user) {
+                function(existingUser){
+                    if(existingUser) {
                         res.json(null);
                     } else {
-                        return createUser(req, res);
+                        return userModel.createUser(user);
+                    }
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(newUser){
+                    if(newUser){
+                        req.login(newUser, function(err) {
+                            if(err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(newUser);
+                            }
+                        });
                     }
                 },
                 function(err){
