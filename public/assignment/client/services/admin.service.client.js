@@ -28,11 +28,11 @@
         }
 
         function deleteUser(userId){
-            return $http.delete("/api/assignment/admin/user" + userId);
+            return $http.delete("/api/assignment/admin/user/" + userId);
         }
 
         function updateUser(userId, updatedUser){
-            return $http.put ("/api/assignment/admin/user" + userId, updatedUser);
+            return $http.put ("/api/assignment/admin/user/" + userId, updatedUser);
         }
     }
 })();

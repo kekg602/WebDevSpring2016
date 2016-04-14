@@ -12,9 +12,9 @@ module.exports = function(app, userModel){
     // admin services
     app.post("/api/assignment/admin/user", isAdmin, createUser);
     app.get("/api/assignment/admin/user", isAdmin, findUsers);
-    app.get("/api/assignment/admin/user/:userId", isAdmin, findUserById);
-    app.delete("/api/assignment/admin/user/:userId", isAdmin, deleteUser);
-    app.put("/api/assignment/admin/user/:userId", isAdmin, updateUser);
+    app.get("/api/assignment/admin/user/:id", isAdmin, findUserById);
+    app.delete("/api/assignment/admin/user/:id", isAdmin, deleteUser);
+    app.put("/api/assignment/admin/user/:id", isAdmin, updateUser);
 
     var auth = authorized;
     app.post("/api/assignment/login", passport.authenticate('local'), login);

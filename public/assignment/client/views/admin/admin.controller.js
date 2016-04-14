@@ -57,7 +57,16 @@
         }
 
         function deleteUser(index){
+            console.log(index);
+            console.log($scope.users[index]._id);
 
+            AdminService
+                .deleteUser($scope.users[index]._id)
+                .then(deleteUserResponse);
+        }
+
+        function deleteUserResponse(response){
+            findAllUsers();
         }
 
         function selectUser(index){
