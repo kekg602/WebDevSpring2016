@@ -78,9 +78,11 @@
     var checkAdminStatus = function($location, $rootScope){
         $rootScope.errorMessage = null;
         // if they are not an admin
-        if ($rootScope.user.roles.indexOf('admin') < 0){
-            $rootScope.errorMessage = "You must be an admin to access this page.";
-            $location.url('/');
+        if ($rootScope.currentUser){
+            if ($rootScope.currentUser.roles.indexOf('admin') < 0){
+                $rootScope.errorMessage = "You must be an admin to access this page.";
+                $location.url('/');
+            }
         }
     }
 })();
