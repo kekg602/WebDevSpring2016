@@ -9,6 +9,13 @@ module.exports = function(app, userModel){
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
+    // admin services
+    app.post("/api/assignment/admin/user", isAdmin, createUser);
+    app.get("/api/assignment/admin/user", isAdmin, findUsers);
+    app.get("/api/assignment/admin/user/:userId", isAdmin, findUserById);
+    app.delete("/api/assignment/admin/user/:userId", isAdmin, deleteUser);
+    app.put("/api/assignment/admin/user/:userId", isAdmin, updateUser);
+
     var auth = authorized;
     app.post("/api/assignment/login", passport.authenticate('local'), login);
     app.post("/api/assignment/logout", logout);
@@ -221,5 +228,16 @@ module.exports = function(app, userModel){
                     done(err, null);
                 }
             );
+    }
+
+    // function to make sure a user is an admin
+    function isAdmin(req, res, next){
+        // check if logged in and admin
+        var user = req.isAuthenticated() ? req.user : '0';
+        if (user && user.roles.indexOf('admin') >= 0){
+            next();
+        } else {
+            res.send(403);
+        }
     }
 }

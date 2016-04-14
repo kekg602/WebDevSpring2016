@@ -27,7 +27,7 @@
                 {
                     templateUrl: "views/admin/admin.view.html",
                     controller: "AdminController",
-                    resolve: {loggedin: checkLoggedIn}
+                    resolve: {loggedin: checkLoggedIn, admin: checkAdminStatus}
                 })
             .when("/home",
                 {
@@ -74,4 +74,13 @@
 
         return deferred.promise;
     };
+
+    var checkAdminStatus = function($location, $rootScope){
+        $rootScope.errorMessage = null;
+        // if they are not an admin
+        if ($rootScope.user.roles.indexOf('admin') < 0){
+            $rootScope.errorMessage = "You must be an admin to access this page.";
+            $location.url('/');
+        }
+    }
 })();
