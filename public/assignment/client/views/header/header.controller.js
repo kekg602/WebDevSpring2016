@@ -12,7 +12,7 @@
 
         function logout() {
             SecurityService
-                .logout();
+                .logout($rootScope.currentUser);
             $rootScope.currentUser = null;
             $location.url("/home");
         }
