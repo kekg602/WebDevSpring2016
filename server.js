@@ -4,6 +4,9 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var multer = require('multer');
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 var connectionString = 'mongodb://127.0.0.1:27017/test';
 
@@ -22,13 +25,16 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
+app.use(cookieParser());
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'secretoption',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 require("./public/assignment/server/app.js")(app, db, mongoose);
-//require("./public/assignment/server/models/forms/form.model.js")(app);
-//require("./public/assignment/server/models/users/user.model.js")(app);
-//require("./public/assignment/server/services/user.service.server.js")(app);
-//require("./public/assignment/server/services/form.service.server.js")(app);
-//require("./public/assignment/server/services/field.service.server.js")(app);
 
 require("./public/project/server/app.js")(app);
 require("./public/project/server/models/schedule.model.js")(app);
