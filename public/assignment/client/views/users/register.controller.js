@@ -5,7 +5,7 @@
         .module("FormBuilderApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($scope, $location, UserService, $rootScope) {
+    function RegisterController($scope, $location, SecurityService, $rootScope) {
         $scope.register = register;
         $scope.message = null;
 
@@ -34,28 +34,20 @@
 
             user.emails = [user.email];
 
-            UserService
-                .findUserByCredentials(user.username, user.password)
-                .then(findUserByCred);
+            delete user.password2;
+            SecurityService
+                .register(user)
+                .then(
+                    function(response) {
+                        if(response.data) {
+                            $rootScope.currentUser = response.data;
+                            $location.url("/profile");
+                        }
+                    },
+                    function(err) {
+                        $scope.message = "Error registering user";
+                    }
+                );
         }
-
-        function findUserByCred(response) {
-            if (response.data) {
-                $scope.message = "User already exists";
-                return;
-            }
-
-            UserService
-                .createUser($scope.user)
-                .then(createUserResponse);
-        }
-
-        function createUserResponse(newUser) {
-            if (newUser.data){
-                $rootScope.currentUser = newUser.data;
-                $location.url("/profile");
-            }
-        }
-
     }
 })();
