@@ -9,6 +9,9 @@
     function AdminController($scope, $location, $rootScope, AdminService) {
         $scope.errorMessage = null;
         $scope.addUser = addUser;
+        $scope.updateUser = updateUser;
+        $scope.deleteUser = deleteUser;
+        $scope.selectUser = selectUser;
 
         findAllUsers();
 
@@ -47,6 +50,19 @@
             } else {
                 $scope.errorMessage = "Error adding user";
             }
+        }
+
+        function updateUser(updatedUser){
+
+        }
+
+        function deleteUser(index){
+
+        }
+
+        function selectUser(index){
+            $scope.selectedUserIndex = index;
+            $scope.user = $scope.users[index];
         }
     }
 
