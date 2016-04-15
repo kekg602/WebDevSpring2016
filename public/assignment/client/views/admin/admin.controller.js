@@ -56,7 +56,7 @@
                 return;
             }
 
-            if (newUser.formatterRoles){
+            if (newUser.formattedRoles){
                 var roles = newUser.formattedRoles.replace(" ", "");
                 roles = roles.split(",");
                 newUser.roles = roles;
