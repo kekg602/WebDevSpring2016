@@ -117,10 +117,18 @@
         }
 
         function deleteUserResponse(response){
-            findAllUsers();
+            if (response){
+                $scope.message = "User deleted successfully";
+                findAllUsers();
+            } else {
+                $scope.error = "Error deleting user";
+            }
         }
 
         function selectUser(index){
+            $scope.message = null;
+            $scope.error = null;
+
             $scope.selectedUserIndex = index;
 
             var roles = $scope.users[index].roles;
