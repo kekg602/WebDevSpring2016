@@ -56,7 +56,7 @@
                 return;
             }
 
-            var roles = newUser.roles.split(",");
+            var roles = newUser.formattedRoles.split(",");
             newUser.roles = roles;
 
             AdminService
