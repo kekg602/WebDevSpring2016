@@ -58,7 +58,7 @@
 
             if (newUser.formatterRoles){
                 var roles = newUser.formattedRoles.replace(" ", "");
-                roles = newUser.formattedRoles.split(",");
+                roles = roles.split(",");
                 newUser.roles = roles;
             } else {
                 newUser.roles = [];
@@ -91,7 +91,7 @@
 
                 if (updatedUser.formattedRoles){
                     var roles = updatedUser.formattedRoles.replace(" ", "");
-                    roles = updatedUser.formattedRoles.split(",");
+                    roles = roles.split(",");
                     updatedUser.roles = roles;
                 }
 
