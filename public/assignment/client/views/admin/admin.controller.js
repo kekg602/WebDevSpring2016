@@ -57,7 +57,8 @@
             }
 
             if (newUser.formatterRoles){
-                var roles = newUser.formattedRoles.split(",");
+                var roles = newUser.formattedRoles.replace(" ", "");
+                roles = newUser.formattedRoles.split(",");
                 newUser.roles = roles;
             } else {
                 newUser.roles = [];
@@ -88,8 +89,11 @@
                 var id = $scope.users[$scope.selectedUserIndex]._id;
                 updatedUser._id = id;
 
-                var roles = updatedUser.formattedRoles.split(",");
-                updatedUser.roles = roles;
+                if (updatedUser.formattedRoles){
+                    var roles = updatedUser.formattedRoles.replace(" ", "");
+                    roles = updatedUser.formattedRoles.split(",");
+                    updatedUser.roles = roles;
+                }
 
                 AdminService
                     .updateUser(id, updatedUser)
