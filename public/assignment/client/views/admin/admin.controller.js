@@ -56,8 +56,12 @@
                 return;
             }
 
-            var roles = newUser.formattedRoles.split(",");
-            newUser.roles = roles;
+            if (newUser.formatterRoles){
+                var roles = newUser.formattedRoles.split(",");
+                newUser.roles = roles;
+            } else {
+                newUser.roles = [];
+            }
 
             AdminService
                 .createUser(newUser)
