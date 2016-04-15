@@ -26,7 +26,23 @@
 
         function renderUsers(users){
             if (users.data){
-                $scope.users = users.data;
+
+                users = users.data;
+                var formattedRoles = "";
+                for (var u in users){
+                    for (var r in users[u].roles){
+                        if (formattedRoles === ""){
+                            formattedRoles = users[u].roles[r];
+                        } else {
+                            formattedRoles = formattedRoles.concat(", " + users[u].roles[r]);
+                        }
+                    }
+                    console.log(formattedRoles);
+                    users[u].formattedRoles = formattedRoles;
+                    formattedRoles = "";
+                }
+
+                $scope.users = users;
             }
         }
 
@@ -39,6 +55,9 @@
                 $scope.errorMessage = "Please provide a password";
                 return;
             }
+
+            var roles = newUser.roles.split(",");
+            newUser.roles = roles;
 
             AdminService
                 .createUser(newUser)
@@ -64,6 +83,9 @@
                 // update the form using service
                 var id = $scope.users[$scope.selectedUserIndex]._id;
                 updatedUser._id = id;
+
+                var roles = updatedUser.formattedRoles.split(",");
+                updatedUser.roles = roles;
 
                 AdminService
                     .updateUser(id, updatedUser)
@@ -101,12 +123,23 @@
         function selectUser(index){
             $scope.selectedUserIndex = index;
 
+            var roles = $scope.users[index].roles;
+            var formattedRoles = "";
+            for (var r in roles){
+                if (formattedRoles === ""){
+                    formattedRoles = roles[r];
+                } else {
+                    formattedRoles = formattedRoles.concat(", ");
+                    formattedRoles = formattedRoles.concat(roles[r]);
+                }
+            }
+
             $scope.user = {
                 username: $scope.users[index].username,
                 password: $scope.users[index].password,
                 firstName: $scope.users[index].firstName,
                 lastName: $scope.users[index].lastName,
-                roles: $scope.users[index].roles
+                formattedRoles: formattedRoles
             };
         }
     }

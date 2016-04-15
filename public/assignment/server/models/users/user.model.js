@@ -127,7 +127,8 @@ module.exports = function(db, mongoose){
              username: updatedUser.username,
              password: updatedUser.password,
              emails: updatedUser.emails,
-             phones: updatedUser.phones},
+             phones: updatedUser.phones,
+             roles: updatedUser.roles},
 
             function(err, doc){
                 if (err){
