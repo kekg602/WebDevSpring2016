@@ -1,7 +1,7 @@
 var mock = require("./user.mock.json");
 var uuid = require('node-uuid');
 
-module.exports = function(){
+module.exports = function(db, mongoose){
     var api = {
         createUser: createUser,
         findAllUsers: findAllUsers,

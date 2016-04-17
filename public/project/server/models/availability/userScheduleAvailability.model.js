@@ -2,7 +2,7 @@ var mock = require("./userScheduleAvailability.mock.json");
 
 // This model represents a relationship between a user and a schedule
 // It allows users to view/update their set availability for a certain scheduled time
-module.exports = function() {
+module.exports = function(db, mongoose) {
     var api = {
         createAvailabilityEntry: createAvailabilityEntry,
         findAvailabilityEntry: findAvailabilityEntry,
