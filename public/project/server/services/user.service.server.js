@@ -8,11 +8,19 @@ module.exports = function(app, userModel){
     app.delete("/api/project/user/:id", deleteUser);
     app.get("/api/project/user/username/:username", findUserByUsername);
 
-    // create user and return all users
+    // create user
     function createUser(req, res){
         var user = req.body;
-        var newUser = userModel.createUser(user);
-        res.json(newUser);
+        //user.password = bcrypt.hashSync(user.password);
+        userModel.createUser(user)
+            .then(
+                function (doc){
+                    res.json(doc);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function findUsers(req, res){
