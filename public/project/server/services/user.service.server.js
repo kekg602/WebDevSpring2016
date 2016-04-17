@@ -34,50 +34,110 @@ module.exports = function(app, userModel){
                 password: password
             };
 
-            var user = userModel.findUserByCredentials(credentials);
-            res.json(user);
+            userModel.findUserByCredentials(credentials)
+                .then(
+                    function (doc){
+                        res.json(doc);
+                    },
+                    function (err){
+                        res.status(400).send(err);
+                    }
+                );
         } else if (firstname && lastname) {
-            var user = userModel.findUserByName(firstname, lastname);
-            res.json(user);
+            userModel.findUserByName(firstname, lastname)
+                .then(
+                    function (doc){
+                        res.json(doc);
+                    },
+                    function (err){
+                        res.status(400).send(err);
+                    }
+                );
         } else {
-            var users = userModel.findAllUsers();
-            res.json(users);
+            userModel.findAllUsers()
+                .then(
+                    function (doc){
+                        res.json(doc);
+                    },
+                    function (err){
+                        res.status(400).send(err);
+                    }
+                );
         }
     }
 
     function findUserByUsername(req, res){
         var username = req.params.username;
-        var user = userModel.findUserByUsername(username);
-        res.json(user);
+
+        userModel.findUserByUsername(username)
+            .then(
+                function (doc){
+                    res.json(doc);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // find a user with a specific id
     function findUserById(req, res){
         var id = req.params.id;
-        var user = userModel.findUserById(id);
-        res.json(user)
+        userModel.findUserById(id)
+            .then(
+                function (doc){
+                    res.json(doc);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // update a user
     function updateUser(req, res){
         var updatedUser = req.body;
         var id = req.params.id;
-        var user = userModel.updateUser(id, updatedUser);
-        res.json(user);
+
+        userModel.updateUser(id, updatedUser)
+            .then(
+                function (doc){
+                    res.send(200);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // delete a user
     function deleteUser(req, res){
         var id = req.params.id;
-        var users = userModel.deleteUser(id);
-        res.json(users);
+
+        userModel.deleteUser(id)
+            .then(
+                function (doc){
+                    res.send(200);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // search function
     function searchUserByName(req, res){
         var firstname = req.query.firstname;
         var lastname = req.query.lastname;
-        var users = userModel.searchUserByName(firstname, lastname);
-        res.json(users);
+
+        userModel.searchUserByName(firstname, lastname)
+            .then(
+                function (doc){
+                    res.send(200);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 }
