@@ -130,15 +130,18 @@
                 }
 
                 $scope.schedule = {};
+
+                getAvailability();
             }
         }
 
         function updateAvailabilityResponse(update){
             if (update.data){
                 $scope.message = "Availability successfully updated";
-                $scope.schedules[$scope.selectedScheduleIndex].availability = update.data.availability;
                 $scope.schedule = {};
                 $scope.selectedScheduleIndex = null;
+
+                getAvailability();
             } else {
                 $scope.error = "Error updating availability";
             }

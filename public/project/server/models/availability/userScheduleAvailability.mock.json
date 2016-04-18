@@ -1,5 +1,0 @@
-[
-  {"userId": "123", "scheduleId": "000", "availability": "yes"},
-  {"userId": "345", "scheduleId": "020", "availability": "yes"},
-  {"userId": "234", "scheduleId": "010", "availability": "no"}
-]
