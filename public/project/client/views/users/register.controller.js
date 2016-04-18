@@ -5,7 +5,7 @@
         .module("TennisSchedulerApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($scope, $location, UserService, $rootScope) {
+    function RegisterController($scope, $location, SecurityService, $rootScope) {
         $scope.register = register;
         $scope.message = null;
 
@@ -32,27 +32,22 @@
                 return;
             }
 
-            UserService
-                .findUserByCredentials(user.username, user.password)
-                .then(findUserByCredentialsCallback);
+            delete user.password2;
+            SecurityService
+                .register(user)
+                .then(
+                    function(response) {
+                        if(response.data) {
+                            $rootScope.currentUser = response.data;
+                            $location.url("/profile");
+                        }
+                    },
+                    function(err) {
+                        $scope.message = "Error registering user";
+                    }
+                );
         }
 
-        function findUserByCredentialsCallback(user) {
-            if (user.data != null) {
-                $scope.message = "User already exists";
-            } else {
-                UserService
-                    .createUser($scope.user)
-                    .then(createUserCallback);
-            }
-        }
-
-        function createUserCallback(newUser) {
-            if (newUser.data){
-                $rootScope.currentUser = newUser.data;
-                $location.url("/profile");
-            }
-        }
 
     }
 })();

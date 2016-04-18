@@ -143,7 +143,7 @@ module.exports = function(app, userModel, playerModel) {
                         res.json(null);
                     } else {
                         user.password = bcrypt.hashSync(user.password);
-                        return userModel.createUser(user);
+                        return playerModel.createUser(user);
                     }
                 },
                 function(err){

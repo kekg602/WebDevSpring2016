@@ -1,3 +1,5 @@
+var bcrypt = require("bcrypt-nodejs");
+
 module.exports = function(app, userModel){
 
     app.post("/api/project/user", createUser);
@@ -11,7 +13,7 @@ module.exports = function(app, userModel){
     // create user
     function createUser(req, res){
         var user = req.body;
-        //user.password = bcrypt.hashSync(user.password);
+        user.password = bcrypt.hashSync(user.password);
         userModel.createUser(user)
             .then(
                 function (doc){
@@ -99,6 +101,7 @@ module.exports = function(app, userModel){
         var updatedUser = req.body;
         var id = req.params.id;
 
+        updatedUser.password = bcrypt.hashSync(updatedUser.password);
         userModel.updateUser(id, updatedUser)
             .then(
                 function (doc){

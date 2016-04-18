@@ -1,3 +1,5 @@
+var bcrypt = require("bcrypt-nodejs");
+
 module.exports = function(app, userModel){
 
     app.post("/api/assignment/user", createUser);
