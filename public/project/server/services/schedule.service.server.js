@@ -27,7 +27,15 @@ module.exports = function (app, scheduleModel){
         var adminId = req.query.adminId;
 
         if (adminId){
-            schedules = scheduleModel.findScheduleByAdminId(adminId);
+            scheduleModel.findScheduleByAdminId(adminId)
+                .then(
+                    function(doc){
+                        res.json(doc);
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                );
         } else {
             scheduleModel.findAllSchedules()
                 .then(
@@ -44,22 +52,46 @@ module.exports = function (app, scheduleModel){
     // find a schedule with a specific id
     function findScheduleById(req, res){
         var id = req.params.id;
-        var schedule = scheduleModel.findScheduleById(id);
-        res.json(schedule);
+
+        scheduleModel.findScheduleById(id)
+            .then(
+                function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // update a schedule with a specific id
     function updateSchedule(req, res){
         var id = req.params.id;
         var updateSchedule = req.body;
-        var schedule = scheduleModel.updateSchedule(id, updateSchedule);
-        res.json(schedule);
+
+        scheduleModel.updateSchedule(id, updateSchedule)
+            .then(
+                function(doc){
+                    res.send(200);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // delete a schedule with a specific id
     function deleteSchedule(req, res){
         var id = req.params.id;
-        var schedules = scheduleModel.deleteSchedule(id);
-        res.json(schedules);
+
+        scheduleModel.deleteSchedule(id)
+            .then(
+                function (doc){
+                    res.send(200);
+                },
+                function (err){
+                    res.status(400).send(err);
+                }
+            );
     }
 }
