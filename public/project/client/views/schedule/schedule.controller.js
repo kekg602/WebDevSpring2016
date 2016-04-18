@@ -115,7 +115,6 @@
                         .createAvailabilityEntry(userAvail)
                         .then(createAvailabilityResponse);
                 }
-
             }
         }
 
