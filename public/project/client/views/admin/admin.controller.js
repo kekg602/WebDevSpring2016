@@ -128,11 +128,13 @@
             if (schedules.data) {
                 $scope.schedule = {};
 
+                $scope.message = "Schedule successfully added";
+
                 ScheduleService
                     .findAllSchedulesForAdmin($scope.user._id)
                     .then(findAllSchedulesForAdminCallback);
             } else {
-                $scope.message = "Error adding schedule";
+                $scope.error = "Error adding schedule";
             }
         }
 
@@ -197,6 +199,8 @@
         }
 
         function deleteScheduleCallback(remainingSchedules){
+            $scope.message = "Schedule deleted successfully";
+
             ScheduleService
                 .findAllSchedulesForAdmin($scope.user._id)
                 .then(findAllSchedulesForAdminCallback);
