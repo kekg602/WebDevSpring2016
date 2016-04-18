@@ -1,81 +1,120 @@
 var mock = require("./schedule.mock.json");
 var uuid = require('node-uuid');
+var q = require("q");
 
 module.exports = function(db, mongoose) {
+    // load schedule schema
+    var ScheduleSchema = require("./schedule.schema.server.js")(mongoose);
+
+    // create mongoose model
+    var ScheduleModel = mongoose.model('Schedule', ScheduleSchema);
+
     var api = {
         createSchedule: createSchedule,
         findScheduleByAdminId: findScheduleByAdminId,
-        findScheduleByUsername: findScheduleByUsername,
         deleteSchedule: deleteSchedule,
         updateSchedule: updateSchedule,
-        findScheduleById: findScheduleById
+        findScheduleById: findScheduleById,
+        findAllSchedules: findAllSchedules
     };
     return api;
 
     // create a new schedule, add it and return schedules
     // created by user id
     function createSchedule(schedule){
-        schedule._id = uuid.v1();
-        mock.push(schedule);
-        var schedules = findScheduleByAdminId(schedule.adminId);
-        return schedules;
+        var deferred = q.defer();
+
+        ScheduleModel.create(schedule, function(err, doc){
+            if (err){
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     // get a list of schedules based on the creator
     function findScheduleByAdminId(adminId){
-        var schedules = [];
-        for (var s in mock){
-            if (mock[s].adminId === adminId){
-                schedules.push(mock[s]);
-            }
-        }
-        return schedules;
-    }
+        var deferred = q.defer();
 
-    // get a list of schedules based on the usernames
-    function findScheduleByUsername(username){
-        var schedules = [];
-        for (var s in mock){
-            for (var u in mock[s].players){
-                if (mock[s].players[u] === username){
-                    schedules.push(mock[s]);
+        ScheduleModel.find(
+            {adminId: adminId},
+
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
                 }
-            }
-        }
-        return schedules;
+
+                return null;
+            });
+
+        return deferred.promise;
     }
 
     // delete a schedule by id
     function deleteSchedule(scheduleId){
-        for (var s in mock){
-            if (mock[s]._id === scheduleId){
-                mock.splice(s, 1);
-            }
-        }
-        return mock;
+        return ScheduleModel.remove().where("_id").equals(scheduleId);
     }
 
     // update a schedule by id
     function updateSchedule(scheduleId, updatedSchedule){
-        for (var s in mock){
-            if (mock[s]._id === scheduleId){
-                mock[s].players = updatedSchedule.players;
-                mock[s].location = updatedSchedule.location;
-                mock[s].date = updatedSchedule.date;
-                mock[s].time = updatedSchedule.time;
+        var deferred = q.defer();
+
+        ScheduleModel.update(
+            {_id: scheduleId},
+            {   date: updatedSchedule.date,
+                time: updatedSchedule.time,
+                location: updatedSchedule.location,
+                adminId: updatedSchedule.adminId,
+                players: updatedSchedule.players},
+
+            function(err, doc){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
             }
-        }
-        var schedules = findScheduleByAdminId(updatedSchedule.adminId);
-        return schedules;
+        );
+
+        return deferred.promise;
     }
 
     // find a schedule by its specific id
     function findScheduleById(scheduleId){
-        for (var s in mock){
-            if (mock[s]._id === scheduleId){
-                return mock[s];
+        var deferred = q.defer();
+
+        ScheduleModel.findById(scheduleId, function(err, doc){
+            if (err){
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
             }
-        }
-        return null;
+
+            return null;
+        });
+
+        return deferred.promise;
+    }
+
+    function findAllSchedules(){
+        var deferred = q.defer();
+
+        ScheduleModel.find(
+            function (err, schedules){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(schedules);
+                }
+
+            }
+        );
+
+        return deferred.promise;
     }
 }

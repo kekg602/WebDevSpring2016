@@ -6,12 +6,19 @@ module.exports = function (app, scheduleModel){
     app.put("/api/project/schedule/:id", updateSchedule);
     app.delete("/api/project/schedule/:id", deleteSchedule);
 
-    // create schedule and return all schedules belonging
-    // to the same admin
+    // create schedule and return it
     function createSchedule(req, res){
         var schedule = req.body;
-        var schedules = scheduleModel.createSchedule(schedule);
-        res.json(schedules);
+
+        scheduleModel.createSchedule(schedule)
+            .then(
+                function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     // find and return all schedules that a certain user
@@ -20,13 +27,19 @@ module.exports = function (app, scheduleModel){
         var username = req.query.username;
         var adminId = req.query.adminId;
 
-        var schedules = null;
         if (username){
-            schedules = scheduleModel.findScheduleByUsername(username);
+            scheduleModel.findScheduleByUsername(username)
+                .then(
+                    function(doc){
+                        res.json(doc);
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                );
         } else if (adminId){
             schedules = scheduleModel.findScheduleByAdminId(adminId);
         }
-        res.json(schedules);
     }
 
     // find a schedule with a specific id
