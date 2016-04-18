@@ -1,8 +1,8 @@
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt-nodejs');
+///var passport = require('passport');
+//var LocalStrategy = require('passport-local').Strategy;
+//var bcrypt = require('bcrypt-nodejs');
 
-module.exports = function(app, userModel, playerModel){
+module.exports = function(app, userModel){
 
     app.post("/api/assignment/user", createUser);
     app.get("/api/assignment/user", findUsers);
@@ -17,15 +17,15 @@ module.exports = function(app, userModel, playerModel){
     app.delete("/api/assignment/admin/user/:id", isAdmin, deleteUser);
     app.put("/api/assignment/admin/user/:id", isAdmin, updateUser);
 
-    var auth = authorized;
-    app.post("/api/assignment/login", passport.authenticate('assignment'), login);
-    app.post("/api/assignment/logout", logout);
-    app.post("/api/assignment/register", register);
-    app.get("/api/assignment/loggedin", loggedin);
+    //var auth = authorized;
+    //app.post("/api/assignment/login", passport.authenticate('assignment'), login);
+    //app.post("/api/assignment/logout", logout);
+    //app.post("/api/assignment/register", register);
+    //app.get("/api/assignment/loggedin", loggedin);
 
-    passport.use('assignment', new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
+    //passport.use('assignment', new LocalStrategy(localStrategy));
+    //passport.serializeUser(serializeUser);
+    //passport.deserializeUser(deserializeUser);
 
     // use this function to see if username and password are valid
     // passport calls this function

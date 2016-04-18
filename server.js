@@ -34,9 +34,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./public/assignment/server/app.js")(app, db, mongoose);
 
-require("./public/project/server/app.js")(app, db, mongoose);
+var userModel = require("./public/assignment/server/models/users/user.model.js")(db, mongoose);
+var playerModel = require("./public/project/server/models/users/user.model.js")(db, mongoose);
+require("./public/security/security.js")(app, userModel, playerModel);
+
+require("./public/assignment/server/app.js")(app, db, mongoose, userModel);
+
+require("./public/project/server/app.js")(app, db, mongoose, playerModel);
 //require("./public/project/server/models/schedule.model.js")(app);
 //require("./public/project/server/models/userScheduleAvailability.model.js")(app);
 //require("./public/project/server/models/user.model.js")(app);

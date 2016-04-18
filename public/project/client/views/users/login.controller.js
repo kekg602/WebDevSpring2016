@@ -22,18 +22,6 @@
                         $scope.message = "User not found";
                     }
                 );
-            ///UserService
-            //    .findUserByCredentials(user.username, user.password)
-            //    .then(findUserByCredCallback);
-        }
-
-        function findUserByCredCallback(foundUser){
-            if (foundUser.data){
-                $rootScope.currentUser = foundUser.data;
-                $location.url("/profile");
-            } else {
-                $scope.message = "User not found";
-            }
         }
     }
 })();

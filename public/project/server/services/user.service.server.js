@@ -14,7 +14,7 @@ module.exports = function(app, userModel){
 
     var auth = authorized;
     app.post("/api/project/login", passport.authenticate('project'), login);
-    //app.post("/api/project/logout", logout);
+    app.post("/api/project/logout", logout);
     //app.post("/api/project/register", register);
     //app.get("/api/project/loggedin", loggedin);
 
@@ -46,6 +46,11 @@ module.exports = function(app, userModel){
         var user = req.user;
         delete user.password;
         res.json(user);
+    }
+
+    function logout(req, res){
+        req.logOut();
+        res.send(200);
     }
 
     function authorized(req, res, next){
