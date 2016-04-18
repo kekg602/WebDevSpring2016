@@ -23,7 +23,7 @@ module.exports = function(app, userModel){
     app.post("/api/assignment/register", register);
     app.get("/api/assignment/loggedin", loggedin);
 
-    passport.use(new LocalStrategy(localStrategy));
+    passport.use('assignment', new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 

@@ -1,3 +1,7 @@
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt-nodejs');
+
 module.exports = function(app, userModel){
 
     app.post("/api/project/user", createUser);
