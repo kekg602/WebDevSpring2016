@@ -1,7 +1,3 @@
-///var passport = require('passport');
-//var LocalStrategy = require('passport-local').Strategy;
-//var bcrypt = require('bcrypt-nodejs');
-
 module.exports = function(app, userModel){
 
     app.post("/api/assignment/user", createUser);
@@ -16,96 +12,6 @@ module.exports = function(app, userModel){
     app.get("/api/assignment/admin/user/:id", isAdmin, findUserById);
     app.delete("/api/assignment/admin/user/:id", isAdmin, deleteUser);
     app.put("/api/assignment/admin/user/:id", isAdmin, updateUser);
-
-    //var auth = authorized;
-    //app.post("/api/assignment/login", passport.authenticate('assignment'), login);
-    //app.post("/api/assignment/logout", logout);
-    //app.post("/api/assignment/register", register);
-    //app.get("/api/assignment/loggedin", loggedin);
-
-    //passport.use('assignment', new LocalStrategy(localStrategy));
-    //passport.serializeUser(serializeUser);
-    //passport.deserializeUser(deserializeUser);
-
-    // use this function to see if username and password are valid
-    // passport calls this function
-    function localStrategy(username, password, done){
-        userModel
-            .findUserByUsername(username)
-            .then(
-                function(user){
-                    if (!user) {
-                        return done(null, false);
-                    } else if (bcrypt.compareSync(password, user.password)){
-                        delete user.password;
-                        return done(null, user);
-                    }
-                },
-                function(err){
-                    if (err){
-                        return done(err);
-                    }
-                }
-            );
-    }
-
-    function login(req, res){
-        var user = req.user;
-        delete user.password;
-        res.json(user);
-    }
-
-    function loggedin(req, res){
-        res.send(req.isAuthenticated() ? req.user : '0');
-    }
-
-    function logout(req, res){
-        req.logOut();
-        res.send(200);
-    }
-
-    function authorized(req, res, next){
-        if (!req.isAuthenticated()){
-            res.send(401);
-        } else {
-            next();
-        }
-    }
-
-    function register (req, res) {
-        var user = req.body;
-        userModel
-            .findUserByUsername(user.username)
-            .then(
-                function(existingUser){
-                    if(existingUser) {
-                        res.json(null);
-                    } else {
-                        user.password = bcrypt.hashSync(user.password);
-                        return userModel.createUser(user);
-                    }
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(newUser){
-                    if(newUser){
-                        req.login(newUser, function(err) {
-                            if(err) {
-                                res.status(400).send(err);
-                            } else {
-                                res.json(newUser);
-                            }
-                        });
-                    }
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            );
-    }
 
     // create user and return the new user
     function createUser(req, res){
