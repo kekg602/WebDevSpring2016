@@ -126,11 +126,8 @@
 
         function addScheduleCallback(schedules){
             if (schedules.data) {
-                //$scope.schedules = schedules.data;
-                //$scope.schedule = {};
-                //$scope.message = "Schedule added successfully";
-                //$scope.formattedSchedules = schedules.data;
-                //formatData();
+                $scope.schedule = {};
+
                 ScheduleService
                     .findAllSchedulesForAdmin($scope.user._id)
                     .then(findAllSchedulesForAdminCallback);
@@ -172,9 +169,13 @@
 
         function updatedScheduleCallback(schedules){
            if(schedules.data){
-               $scope.schedules = schedules.data;
+              // $scope.schedules = schedules.data;
                $scope.message = "Schedule updated successfully";
                $scope.schedule = {};
+
+               ScheduleService
+                   .findAllSchedulesForAdmin($scope.user._id)
+                   .then(findAllSchedulesForAdminCallback);
                formatData();
            } else {
                $scope.error = "Error updating schedule";
