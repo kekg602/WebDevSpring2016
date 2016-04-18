@@ -12,7 +12,8 @@
             deleteScheduleById: deleteScheduleById,
             updateScheduleById: updateScheduleById,
             findSchedulesByUsername: findSchedulesByUsername,
-            findScheduleById: findScheduleById
+            findScheduleById: findScheduleById,
+            findAllSchedules: findAllSchedules
         };
         return model;
 
@@ -40,5 +41,8 @@
             return $http.get("/api/project/schedule/" + scheduleId);
         }
 
+        function findAllSchedules(){
+            return $http.get("/api/project/schedule");
+        }
     }
 })();

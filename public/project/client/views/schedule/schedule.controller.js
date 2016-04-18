@@ -20,13 +20,25 @@
         // get this user's schedule
         if ($scope.username){
             ScheduleService
-                .findSchedulesByUsername($scope.username)
+                .findAllSchedules()
                 .then(findScheduleResponse);
         }
 
         function findScheduleResponse(schedules){
             if (schedules.data){
-                $scope.schedules = schedules.data;
+                // go through the schedules and show the
+                // ones that correspond to this user's username
+                var schedulesData = schedules.data;
+                var schedulesList = [];
+                for (var s in schedulesData){
+                    for (var p in schedulesData[s].players){
+                        if (schedulesData[s].players[p] === $scope.username){
+                            schedulesList.push(schedulesData[s]);
+                        }
+                    }
+                }
+
+                $scope.schedules = schedulesList;
                 formatData();
                 $scope.getAvailability();
             }

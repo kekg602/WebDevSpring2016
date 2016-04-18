@@ -24,11 +24,12 @@ module.exports = function (app, scheduleModel){
     // find and return all schedules that a certain user
     // is a part of or the admin of
     function findSchedule(req, res){
-        var username = req.query.username;
         var adminId = req.query.adminId;
 
-        if (username){
-            scheduleModel.findScheduleByUsername(username)
+        if (adminId){
+            schedules = scheduleModel.findScheduleByAdminId(adminId);
+        } else {
+            scheduleModel.findAllSchedules()
                 .then(
                     function(doc){
                         res.json(doc);
@@ -37,8 +38,6 @@ module.exports = function (app, scheduleModel){
                         res.status(400).send(err);
                     }
                 );
-        } else if (adminId){
-            schedules = scheduleModel.findScheduleByAdminId(adminId);
         }
     }
 
