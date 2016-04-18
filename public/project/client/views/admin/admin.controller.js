@@ -146,9 +146,10 @@
                 schedule.adminId = $scope.user._id;
 
                 var usernames = schedule.players + "";
-                console.log(usernames);
+
                 var list = [];
-                list = usernames.split(",");
+                list = usernames.replace(" ", "");
+                list = list.split(",");
                 console.log(list);
                 var newPlayerList = [];
                 for (var u in list){

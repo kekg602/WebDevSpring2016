@@ -16,15 +16,19 @@
                 showing what the project has -->
                 <li ng-class="{'active': $location.url()==='/home'}">
                     <a href="#/home">    Home   </a></li>
-                <li ng-class="{'active': $location.url()==='/login'}">
+                <li ng-hide="currentUser"
+                    ng-class="{'active': $location.url()==='/login'}">
                     <a href="#/login">   Login  </a></li>
-                <li ng-class="{'active': $location.url()==='/register'}">
+                <li ng-hide="currentUser"
+                    ng-class="{'active': $location.url()==='/register'}">
                     <a href="#/register">Register</a></li>
-                <li >
+                <li ng-show="currentUser">
                     <a ng-click="logout()">  Logout </a></li>
-                <li ng-class="{'active': $location.url()==='/profile'}">
+                <li ng-show="currentUser"
+                    ng-class="{'active': $location.url()==='/profile'}">
                     <a href="#/profile"> Profile</a></li>
-                <li ng-class="{'active': $location.url() === '/admin'}">
+                <li ng-show="currentUser"
+                    ng-class="{'active': $location.url() === '/admin'}">
                     <a href="#/admin">   Admin Scheduling  </a></li>
                 <li  ng-class="{'active': $location.url() === '/search'}">
                     <a href="#/search"> Find a Player</a></li>
