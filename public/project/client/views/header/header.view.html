@@ -24,13 +24,13 @@
                     <a href="#/register">Register</a></li>
                 <li ng-show="currentUser"
                     ng-class="{'active': $location.url()==='/profile'}">
-                    <a href="#/profile"> Profile</a></li>
-                <li ng-show="currentUser"
-                    ng-class="{'active': $location.url() === '/admin'}">
-                    <a href="#/admin">   Admin Scheduling  </a></li>
+                    <a href="#/profile">My Profile</a></li>
                 <li ng-show="currentUser"
                     ng-class="{'active': $location.url() === '/schedule'}">
-                    <a href="#/schedule"> Schedule</a></li>
+                    <a href="#/schedule">My Schedule</a></li>
+                <li ng-show="currentUser"
+                    ng-class="{'active': $location.url() === '/admin'}">
+                    <a href="#/admin">Schedule Editor</a></li>
                 <li  ng-class="{'active': $location.url() === '/search'}">
                     <a href="#/search"> Find a Player</a></li>
                 <li ng-show="currentUser">
