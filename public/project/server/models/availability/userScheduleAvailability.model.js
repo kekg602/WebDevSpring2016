@@ -1,8 +1,14 @@
-var mock = require("./userScheduleAvailability.mock.json");
+var q = require("q");
 
 // This model represents a relationship between a user and a schedule
 // It allows users to view/update their set availability for a certain scheduled time
 module.exports = function(db, mongoose) {
+    // load schema
+    var AvailabilitySchema = require("./userScheduleAvailability.schema.server.js")(mongoose);
+
+    // create mongoose model
+    var AvailabilityModel = mongoose.model("Availability", AvailabilitySchema);
+
     var api = {
         createAvailabilityEntry: createAvailabilityEntry,
         findAvailabilityEntry: findAvailabilityEntry,
@@ -13,41 +19,64 @@ module.exports = function(db, mongoose) {
 
     // add an availability
     function createAvailabilityEntry(availability){
-        mock.push(availability);
-        return availability;
+        var deferred = q.defer();
+
+        AvailabilityModel.create(availability, function(err, doc){
+            if (err){
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
+            }
+        });
+
+        return deferred.promise;
     }
 
     // get a user's availability for a specific schedule
     function findAvailabilityEntry(userId, scheduleId){
-        for (var x in mock){
-            if (mock[x].userId === userId &&
-                mock[x].scheduleId === scheduleId){
-                return mock[x];
-            }
-        }
-        return null;
+        var deferred = q.defer();
+
+        AvailabilityModel.findOne(
+            {userId: userId,
+             scheduleId: scheduleId},
+
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+
+                return null;
+            });
+
+        return deferred.promise;
     }
 
     // update a user's availability for a certain schedule entry
-    function updateAvailabilityEntry(updatedAvailability){
-        for (var x in mock){
-            if (mock[x].userId === updatedAvailability.userId &&
-            mock[x].scheduleId === updatedAvailability.scheduleId){
-                mock[x].availability = updatedAvailability.availability;
-                return mock[x];
+    function updateAvailabilityEntry(availabilityId, updatedAvailability){
+        var deferred = q.defer();
+
+        AvailabilityModel.update(
+            {_id: availabilityId},
+            { userId: updatedAvailability.userId,
+              scheduleId: updatedAvailability.scheduleId,
+              availability: updatedAvailability.availability},
+
+            function(err, doc){
+                if (err){
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
             }
-        }
-        return null;
+        );
+
+        return deferred.promise;
     }
 
     // delete a user's availability for a certain schedule
-    function deleteAvailabilityEntry(userId, scheduleId){
-        for (var x in mock){
-            if (mock[x].userId === userId &&
-                mock[x].scheduleId === scheduleId){
-                mock.splice(x, 1);
-            }
-        }
-        return mock;
+    function deleteAvailabilityEntry(availabilityId){
+        return AvailabilityModel.remove().where("_id").equals(availabilityId);
     }
 }
