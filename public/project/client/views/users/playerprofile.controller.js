@@ -29,8 +29,6 @@
         // get user schedules in order to render list of who they play with
         function getUserSchedules(){
             if ($scope.user.username){
-                console.log($scope.user.username);
-
                 ScheduleService
                     .findAllSchedules()
                     .then(renderPlaysWithDetails);
@@ -44,6 +42,7 @@
                 // go through the schedules and get the
                 // ones that correspond to this user's username
                 var schedulesData = schedules.data;
+
                 var schedulesList = [];
                 for (var s in schedulesData){
                     for (var p in schedulesData[s].players){
@@ -53,15 +52,15 @@
                     }
                 }
 
+                console.log(schedulesList);
+
                 var playsWith = [];
                 for (var s in schedulesList){
-                    for (var p in schedulesList.players){
-
+                    for (var p in schedulesList[s].players){
                         console.log(playsWith.indexOf(schedulesList[s].players[p]));
 
                         // if the user is not in the list yet, add them
-                        if (playsWith.indexOf(schedulesList[s].players[p]) <= -1 &&
-                            schedulesList[s].players[p] != $scope.user.username){
+                        if (playsWith.indexOf(schedulesList[s].players[p]) <= -1 && schedulesList[s].players[p] != $scope.user.username){
                             playsWith.push(schedulesList[s].players[p]);
                         }
                     }
