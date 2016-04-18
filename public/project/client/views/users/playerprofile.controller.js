@@ -32,7 +32,7 @@
                 console.log($scope.user.username);
 
                 ScheduleService
-                    .findSchedulesByUsername($scope.user.username)
+                    .findAllSchedules()
                     .then(renderPlaysWithDetails);
             }
         }
@@ -41,22 +41,38 @@
         function renderPlaysWithDetails(schedules){
             if (schedules.data){
 
-                $scope.schedules = schedules.data;
-
-                var playsWith = [];
-                for (var s in schedules.data){
-                    for (var p in schedules.data[s].players){
-
-                        console.log(playsWith.indexOf(schedules.data[s].players[p]));
-
-                        // if the user is not in the list yet, add them
-                        if (playsWith.indexOf(schedules.data[s].players[p]) <= -1 &&
-                        schedules.data[s].players[p] != $scope.user.username){
-                            playsWith.push(schedules.data[s].players[p]);
+                // go through the schedules and get the
+                // ones that correspond to this user's username
+                var schedulesData = schedules.data;
+                var schedulesList = [];
+                for (var s in schedulesData){
+                    for (var p in schedulesData[s].players){
+                        if (schedulesData[s].players[p] === $scope.username){
+                            schedulesList.push(schedulesData[s]);
                         }
                     }
                 }
-                $scope.playsWith = playsWith;
+
+                var playsWith = [];
+                for (var s in schedulesList){
+                    for (var p in schedulesList.players){
+
+                        console.log(playsWith.indexOf(schedulesList[s].players[p]));
+
+                        // if the user is not in the list yet, add them
+                        if (playsWith.indexOf(schedulesList[s].players[p]) <= -1 &&
+                            schedulesList[s].players[p] != $scope.user.username){
+                            playsWith.push(schedulesList[s].players[p]);
+                        }
+                    }
+                }
+
+                if (playsWith.length === 0) {
+                    $scope.noplayermessage = "Player has not played with anyone else yet";
+                } else {
+                    $scope.playsWith = playsWith;
+                    $scope.noplayermessage = "";
+                }
             }
         }
 
