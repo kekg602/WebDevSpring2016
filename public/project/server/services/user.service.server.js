@@ -133,7 +133,7 @@ module.exports = function(app, userModel){
         userModel.searchUserByName(firstname, lastname)
             .then(
                 function (doc){
-                    res.send(200);
+                    res.send(doc);
                 },
                 function(err){
                     res.status(400).send(err);
