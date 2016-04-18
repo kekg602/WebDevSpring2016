@@ -34,11 +34,11 @@
         function searchCallback(players){
             $scope.error = null;
             if (players.data){
-                if (players.data != []){
+                if (players.data.length === 0){
+                    $scope.error = "Sorry, there are no players with that name";
+                } else {
                     console.log(players.data);
                     $scope.players = players.data;
-                } else {
-                    $scope.error = "Sorry, there are no players with that name";
                 }
             } else {
                 $scope.error = "Sorry, there are no players with that name";
