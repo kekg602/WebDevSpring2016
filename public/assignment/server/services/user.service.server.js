@@ -18,7 +18,7 @@ module.exports = function(app, userModel){
     app.put("/api/assignment/admin/user/:id", isAdmin, updateUser);
 
     var auth = authorized;
-    app.post("/api/assignment/login", passport.authenticate('local'), login);
+    app.post("/api/assignment/login", passport.authenticate('assignment'), login);
     app.post("/api/assignment/logout", logout);
     app.post("/api/assignment/register", register);
     app.get("/api/assignment/loggedin", loggedin);
