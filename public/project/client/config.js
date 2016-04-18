@@ -30,22 +30,26 @@
             .when("/profile",
                 {
                     templateUrl: "views/users/profile.view.html",
-                    controller: "ProfileController"
+                    controller: "ProfileController",
+                    resolve: {loggedin: checkLoggedIn}
                 })
             .when("/admin",
                 {
                     templateUrl: "views/admin/admin.view.html",
-                    controller: "AdminScheduleController"
+                    controller: "AdminScheduleController",
+                    resolve: {loggedin: checkLoggedIn}
                 })
             .when("/schedule/:scheduleId",
                 {
                     templateUrl: "views/schedule/scheduleDetails.view.html",
-                    controller: "ScheduleDetailController"
+                    controller: "ScheduleDetailController",
+                    resolve: {loggedin: checkLoggedIn}
                 })
             .when("/schedule",
                 {
                     templateUrl: "views/schedule/schedule.view.html",
-                    controller: "ScheduleController"
+                    controller: "ScheduleController",
+                    resolve: {loggedin: checkLoggedIn}
                 })
             .when("/search",
                 {
@@ -56,4 +60,29 @@
                     redirectTo: "/home"
             });
     }
+
+    var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope)
+    {
+        var deferred = $q.defer();
+
+        $http.get('/api/project/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0')
+            {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            }
+            // User is Not Authenticated
+            else
+            {
+                $rootScope.errorMessage = 'You need to log in.';
+                deferred.reject();
+                $location.url('/');
+            }
+        });
+
+        return deferred.promise;
+    };
 })();
