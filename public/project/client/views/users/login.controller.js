@@ -5,15 +5,26 @@
         .module("TennisSchedulerApp")
         .controller("LoginController", LoginController);
 
-    function LoginController($scope, UserService, $location, $rootScope){
+    function LoginController($scope, SecurityService, $location, $rootScope){
         $scope.login = login;
 
         function login(user){
             $scope.message = null;
 
-            UserService
-                .findUserByCredentials(user.username, user.password)
-                .then(findUserByCredCallback);
+            SecurityService
+                .login(user)
+                .then(
+                    function(response) {
+                        $rootScope.currentUser = response.data;
+                        $location.url("/profile");
+                    },
+                    function(err) {
+                        $scope.message = "User not found";
+                    }
+                );
+            ///UserService
+            //    .findUserByCredentials(user.username, user.password)
+            //    .then(findUserByCredCallback);
         }
 
         function findUserByCredCallback(foundUser){

@@ -2,7 +2,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
 
-module.exports = function(app, userModel){
+module.exports = function(app, userModel, playerModel){
 
     app.post("/api/assignment/user", createUser);
     app.get("/api/assignment/user", findUsers);
@@ -221,17 +221,31 @@ module.exports = function(app, userModel){
     }
 
     function deserializeUser(user,done){
-        userModel
-            .findUserById(user._id)
-            .then(
-                function(user){
-                    delete user.password;
-                    done(null, user);
-                },
-                function(err){
-                    done(err, null);
-                }
-            );
+        if (user.type === "user"){
+            userModel
+                .findUserById(user._id)
+                .then(
+                    function(user){
+                        delete user.password;
+                        done(null, user);
+                    },
+                    function(err){
+                        done(err, null);
+                    }
+                );
+        } else if (user.type === "player"){
+            playerModel
+                .findUserById(user._id)
+                .then(
+                    function(user){
+                        delete user.password;
+                        done(null, user);
+                    },
+                    function(err){
+                        done(err, null);
+                    }
+                );
+        }
     }
 
     // function to make sure a user is an admin
