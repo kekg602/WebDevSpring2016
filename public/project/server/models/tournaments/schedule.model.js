@@ -1,5 +1,3 @@
-var mock = require("./schedule.mock.json");
-var uuid = require('node-uuid');
 var q = require("q");
 
 module.exports = function(db, mongoose) {
