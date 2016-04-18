@@ -1,5 +1,4 @@
-var q = require("q")
-var mock = require("./user.mock.json");
+var q = require("q");
 
 module.exports = function(db, mongoose){
     // load user schema
